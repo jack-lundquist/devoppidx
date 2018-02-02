@@ -1,0 +1,81 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>NYC Development Opportunity Index</title>
+  <meta name="description" content="NYC Development Opportunity Index">
+  <meta name="author" content="Jack Lundquist">
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body><div id="header">
+  <img id="avatar" src="http://cusp.nyu.edu/wp-content/uploads/2017/09/Lundquist-Jack-e1506091810407-224x224.jpg"> <div id='head_text'>
+  Header Color: #3ee095
+  </div>
+</div>
+<div id="body">
+<p>My name is Jack and I am a student at <a target="_blank" href="http://cusp.nyu.edu/">CUSP</a>.
+  <h3>Things I Like</h3>
+  <ul>
+    <li>Wild geese that fly with the moon on their wings</li>
+    <li>Whiskers on kittens</li>
+    <li>Warm woolen mittens</li>
+  </ul>
+ </p>
+ <h3>
+ Count:
+ </h3>
+ <div class="currentCount">
+ 1
+ </div>
+<button class="headerColorChangeButton">
+Click Me to Change Header Color
+</button>
+
+<button class="counterIncrementButton">
+Click Me to Increment Counter!
+</button>
+
+
+<h3>
+Use the sliders to change the background of this page!
+</h3>
+
+<div id="colorSelect">
+        <span id="newColor"></span>
+        <div class="sliders">
+            <p>
+                <label for="red">Red <span id="redval"></span><br></label>
+                <input id="red" name="red" type="range" min=0 max=255 value=0 oninput="changeColor(this.value)">
+            </p>
+
+            <p>
+                <label for="green">Green <span id="greenval"></span><br></label>
+                <input id="green" name="green" type="range" min=0 max=255 value=0 oninput="changeColor(this.value)">
+            </p>
+            <p>
+                <label for="blue">Blue: <span id="blueval"></span><br></label>
+                <input id="blue" name="blue" type="range" min=0 max=255 value=0 oninput="changeColor(this.value)">
+            </p>
+        </div>
+        <div>
+        <button id="addNewColor">Change Background Color</button>
+        </div>
+    </div>
+    <div class="currentColor">
+ Background Color: White
+ </div>
+</div>
+<script
+  src="http://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+  crossorigin="anonymous"></script><script src="js/scripts.js"></script>
+</body>
+</html>
