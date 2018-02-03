@@ -1,4 +1,4 @@
-ul {
+#navbar {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -6,11 +6,11 @@ ul {
     background-color: #333;
 }
 
-li {
+.nav {
     float: left;
 }
 
-li a {
+.nav a {
     display: block;
     color: white;
     text-align: center;
@@ -18,7 +18,7 @@ li a {
     text-decoration: none;
 }
 
-li a:hover:not(.active) {
+.nav a:hover:not(.active) {
     background-color: #111;
 }
 
@@ -27,11 +27,10 @@ li a:hover:not(.active) {
 }
 
 #header {
-  background: #3ee095;
+  background-color: #333;
   color: white;
   padding: 20px;
   font-size: 30px;
-  border-radius: 8px;
   text-align: center;
 }
 
@@ -48,6 +47,7 @@ li a:hover:not(.active) {
 body {
   font-family: sans-serif;
   padding: 20px;
+  margin: 0;
 }
 .headerColorChangeButton{
   padding: 5px;
@@ -64,5 +64,36 @@ body {
 }
 
 .currentColor {
-  margin: 5px;
-  }
+    background-color: lightgrey;
+    width: 300px;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;
+    text-align: center;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    /*height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
