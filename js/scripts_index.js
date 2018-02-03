@@ -16,7 +16,8 @@ console.log('You moused over ' + text);
 $('#addNewColor').click(function() {
 var r = $("#red").val(); var g = $("#green").val(); var b = $("#blue").val();
 $('.currentColor').css("background-color", "rgb(" + r + "," + g +", " + b + ")");
-$('.currentColor').text("Background Color: rgb(" + r + "," + g +", " + b + ")");
+$('.currentColor').text("Box Color: " + "rgb(" + r + "," + g +", " + b + ")" +
+"\n" + "Border Color: green");
 })
 
 var sliderRed = document.getElementById("red");
