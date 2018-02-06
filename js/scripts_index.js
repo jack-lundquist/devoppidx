@@ -13,11 +13,18 @@ var text = $(this).text()
 console.log('You moused over ' + text);
 })
 
-$('#addNewColor').click(function() {
+$('#updateBox').click(function() {
 var r = $("#red").val(); var g = $("#green").val(); var b = $("#blue").val();
 $('.currentColor').css("background-color", "rgb(" + r + "," + g +", " + b + ")");
-$('.currentColor').text("Box Color: " + "rgb(" + r + "," + g +", " + b + ")" +
-"\n" + "Border Color: green");
+if($('#changeBorder').prop('checked')) {
+  $('.currentColor').css("border", "0px");
+  $('.currentColor').text("Box Color: " + "rgb(" + r + "," + g +", " + b + ")" +
+  "\n" + "Border Color: N/A");
+} else {
+  $('.currentColor').css("border", "25px solid green");
+  $('.currentColor').text("Box Color: " + "rgb(" + r + "," + g +", " + b + ")" +
+  "\n" + "Border Color: green");
+}
 })
 
 var sliderRed = document.getElementById("red");
