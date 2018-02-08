@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Nunito', sans-serif;
   margin: 0;
 }
 
@@ -8,7 +8,7 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: rgba(95, 168, 128, .9);
 }
 
 .nav {
@@ -20,19 +20,23 @@ body {
     color: white;
     text-align: center;
     padding: 14px 16px;
-    text-decoration: none;
 }
 
-.nav a:hover:not(.active) {
-    background-color: #111;
+.nav a:hover {
+    color: rgba(100,100,100,1);
+}
+
+.nav a:not(.active){
+  text-decoration: none;
 }
 
 .active {
-    background-color: #4CAF50;
+    text-decoration: underline;
+    text-decoration-color: white;
 }
 
 #header {
-  background-color: #333;
+  background-color: rgba(95, 168, 128, .9);
   color: white;
   padding: 20px;
   font-size: 30px;
@@ -69,6 +73,13 @@ body {
     padding: 25px;
     margin: 25px;
     text-align: center;
+}
+
+.sliders{
+  float:left;
+  width:300px;
+  overflow-y: auto;
+  height: 300px;
 }
 
 * {
