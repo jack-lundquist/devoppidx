@@ -1,6 +1,33 @@
 body {
   font-family: 'Nunito', sans-serif;
+  color: white;
   margin: 0;
+  background-image: url("https://www.popphoto.com/sites/popphoto.com/files/import/2015/files/_images/201501/screen_shot_2015-01-13_at_12.01.55_pm.png")
+}
+
+.datasets{
+  text-align: center;
+  background-color: rgba(144,144,144,.7);
+  margin: 0px auto;
+  width: 300px;
+}
+
+a:link, a:visited {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:hover, a:active {
+    text-decoration: underline;
+}
+
+.data_list{
+  font-size: 20px;
+  text-align: center;
+  display: inline-block;
+  padding: 20px;
+  margin-bottom: 10px;
 }
 
 #navbar {
