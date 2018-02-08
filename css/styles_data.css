@@ -1,3 +1,8 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+}
+
 #navbar {
     list-style-type: none;
     margin: 0;
@@ -42,12 +47,6 @@
   -webkit-box-shadow: 3px 3px 2px 0px rgba(87, 87, 87, 1);
   -moz-box-shadow: 3px 3px 2px 0px rgba(87, 87, 87, 1);
   box-shadow: 3px 3px 2px 0px rgba(87, 87, 87, 1);
-}
-
-body {
-  font-family: sans-serif;
-  padding: 20px;
-  margin: 0;
 }
 .headerColorChangeButton{
   padding: 5px;
