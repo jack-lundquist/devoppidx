@@ -20,11 +20,19 @@ body {
     color: white;
     text-align: center;
     padding: 14px 16px;
-    text-decoration: none;
 }
 
-a:hover, a:active {
-    color: #D3D3D3;
+.nav a:hover {
+    color: rgba(100,100,100,1);
+}
+
+.nav a:not(.active){
+  text-decoration: none;
+}
+
+.active {
+    text-decoration: underline;
+    text-decoration-color: white;
 }
 
 #header {

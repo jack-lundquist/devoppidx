@@ -23,13 +23,14 @@ body {
     text-decoration: none;
 }
 
-a:hover {
-    color: #D3D3D3;
+.nav a:hover:not(.active) {
+    background-color: #111;
 }
 
-a:active {
-    background-color: rgb(136,136,136,.5);
+.active {
+    background-color: #4CAF50;
 }
+
 
 #header {
   background-color: rgba(95, 168, 128, .9);
