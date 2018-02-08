@@ -40,7 +40,7 @@
 
       <div id="colorSelect">
               <span id="newColor"></span>
-              <div class="sliders">
+              <div class="sliders" style="overflow-y:auto">
                   <p>
                       <label for="red">Red <span id="redval"></span><br></label>
                       <input id="red" name="red" type="range" min=0 max=255 value=0 oninput="changeColor(this.value)">
@@ -54,11 +54,12 @@
                       <label for="blue">Blue: <span id="blueval"></span><br></label>
                       <input id="blue" name="blue" type="range" min=0 max=255 value=0 oninput="changeColor(this.value)">
                   </p>
+                  <div>
+                  Turn off border: <input type="checkbox" id="changeBorder"> <br> <br>
+                  <button id="updateBox">Change Background Color and Border</button>
+                  </div>
               </div>
-              <div>
-              Turn off border: <input type="checkbox" id="changeBorder"> <br> <br>
-              <button id="updateBox">Change Background Color and Border</button>
-              </div>
+
           </div>
     </div>
   </div>
