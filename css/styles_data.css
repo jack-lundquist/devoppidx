@@ -8,21 +8,23 @@ body {
 .datasets{
   text-align: center;
   background-color: rgba(144,144,144,.7);
-  margin: 0px auto;
-  width: 300px;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  left: 50%;
+  bottom: 50%;
+  width: 400px;
+  height: 300px;
+  margin-top: -150px;
+  margin-left: -200px;
 }
 
-a:link, a:visited {
-    color: white;
-    text-decoration: none;
-    display: inline-block;
-}
-
-a:hover, a:active {
-    text-decoration: underline;
+a{
+  text-decoration: none;
 }
 
 .data_list{
+  color: white;
   font-size: 20px;
   text-align: center;
   display: inline-block;
@@ -30,12 +32,23 @@ a:hover, a:active {
   margin-bottom: 10px;
 }
 
+.data_list a:link, a:visited {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a.data_list:hover{
+    text-decoration: underline;
+}
+
+
 #navbar {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: rgba(95, 168, 128, .9);
+    background-color: rgba(109, 198, 149, 1);
 }
 
 .nav {
@@ -57,13 +70,13 @@ a:hover, a:active {
   text-decoration: none;
 }
 
-.active {
+.nav a:active {
     text-decoration: underline;
     text-decoration-color: white;
 }
 
 #header {
-  background-color: rgba(95, 168, 128, .9);
+  background-color: rgba(109, 198, 149, 1);
   color: white;
   padding: 20px;
   font-size: 30px;
