@@ -42,6 +42,12 @@ a.data_list:hover{
     text-decoration: underline;
 }
 
+.subhead{
+  color: white;
+  font-size: 30px;
+  text-align: center;
+}
+
 
 #navbar {
     list-style-type: none;

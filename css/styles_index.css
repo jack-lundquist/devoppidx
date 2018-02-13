@@ -76,28 +76,31 @@ body {
 }
 
 .sliders{
-  float:left;
-  width:300px;
-  overflow-y: auto;
+  text-align: center;
+  float:center;
+  width:100%;
+  /* overflow-y: auto; */
   height: 450px;
 }
 
 .second_col{
-  float:left;
+  float:right;
+  /* width: 80%; */
   width: auto;
-  overflow-y: auto;
-  height: 450px;
+  /* overflow-y: auto;
+  height: 450px; */
 }
 * {
     box-sizing: border-box;
 }
 
 /* Create two equal columns that floats next to each other */
-.column {
+.column_one {
     float: left;
-    width: 50%;
+    width: 30%;
     padding: 10px;
-    /*height: 300px; /* Should be removed. Only for demonstration */
+    overflow-y: auto;
+    height: 450px;
 }
 
 /* Clear floats after the columns */
@@ -115,8 +118,8 @@ body {
 }
 
 #my-map{
-  height: 300px;
-  width: 300px;
+  height: 450px;
+  width: 800px;
   top: 0;
   bottom: 0;
   left: 0;
@@ -126,4 +129,13 @@ body {
 #flyTo{
   font-size: 20px;
   padding: 5px;
+}
+
+#slider_description{
+  font-size: 15px;
+  text-align: center;
+}
+
+#slider_header{
+  text-align: center;
 }
