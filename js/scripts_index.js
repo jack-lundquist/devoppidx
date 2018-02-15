@@ -119,14 +119,12 @@ var oldHousingMax = getMax("prelim_data_one", 'renter');
 var newHousingMin = getMin("prelim_data_one", 'renter');
 var newHousingMax = getMax("prelim_data_one", 'renter');
 
-
-
 $('#updateBox').click(function() {
   var idx = [$("#vacancy").val(), $("#shortTrip").val(), $("#highRent").val(), $("#renter").val(),
   $("#owners").val(), $("#recentMove").val(), $("#unemployed").val(), $("#white").val(),
   $("#poverty").val(), $("#elderly").val(), $("#children").val(), $("#highIncome").val(),
   $("#hsMinus").val(), $("#collegePlus").val(), $("#oldHousing").val(), $("#newHousing").val()];
-  L.geoJSON.clearLayers();
+  // L.geoJSON.clearLayers();
   function onEachFeature_fun(feature, layer) {
     var score = (idx[15]*minMaxNorm(newHousingMin, newHousingMax, feature.properties.pct_builtafter2010) +
     idx[14]*minMaxNorm(oldHousingMin, oldHousingMax, feature.properties.pct_builtbefore1940) +
@@ -145,7 +143,7 @@ $('#updateBox').click(function() {
     idx[1]*minMaxNorm(tripMin, tripMax, feature.properties.pct_traveltime_under30mins) +
     idx[0]*minMaxNorm(vacancyMin, vacancyMax, feature.properties.pct_vacantunits));
     feature.properties.idx = score
-  }
+  };
   function style(feature) {
       return {
           fillColor: getColor(feature.properties.idx),
@@ -155,27 +153,13 @@ $('#updateBox').click(function() {
           dashArray: '3',
           fillOpacity: 0.7
       };
-  }
+  };
   L.geoJSON(prelim_data_one, {
       onEachFeature: onEachFeature_fun,
       style: style
   }).addTo(map);
 })
-//
-//
-//
-//
-// $('.currentColor').css("background-color", "rgb(" + r + "," + g +", " + b + ")");
-// if($('#changeBorder').prop('checked')) {
-//   $('.currentColor').css("border", "0px");
-//   $('.currentColor').text("Box Color: " + "rgb(" + r + "," + g +", " + b + ")" +
-//   "\n" + "Border Color: N/A");
-// } else {
-//   $('.currentColor').css("border", "25px solid green");
-//   $('.currentColor').text("Box Color: " + "rgb(" + r + "," + g +", " + b + ")" +
-//   "\n" + "Border Color: green");
-// }
-// });
+
 
 // var sliderRed = document.getElementById("red");
 // var outputRed = document.getElementById("redval");
