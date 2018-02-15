@@ -3,6 +3,10 @@ body {
   margin: 0;
 }
 
+h3{
+  text-align: center;
+}
+
 #navbar {
     list-style-type: none;
     margin: 0;
@@ -83,48 +87,56 @@ body {
   height: 450px;
 }
 
-.second_col{
-  float:right;
+.column_one {
+    float: left;
+    width: 30%;
+    /* padding: 10px; */
+    overflow-y: auto;
+    height: 450px;
+    margin-top: 10px;
+}
+
+#my-map{
+  margin-top: 10px;
+  margin-left: 10px;
+  float: left;
+  width: 40%;
+  height: 450px;
+  padding: 10px;
+}
+
+.third_col{
+  float: left;
+  width: 25%;
+  height: 450px;
+  margin-left: 10px;
+}
+
+/* .second_col{
   /* width: 80%; */
-  width: auto;
+  /* width: 20%; */
   /* overflow-y: auto;
   height: 450px; */
-}
+/* } */
 * {
     box-sizing: border-box;
 }
 
-/* Create two equal columns that floats next to each other */
-.column_one {
-    float: left;
-    width: 30%;
-    padding: 10px;
-    overflow-y: auto;
-    height: 450px;
-}
-
 /* Clear floats after the columns */
 .row:after {
-    content: "";
-    display: table;
-    clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
     .column {
         width: 100%;
     }
-}
+} */
 
-#my-map{
-  height: 450px;
-  width: 800px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
+
 
 #flyTo{
   font-size: 20px;

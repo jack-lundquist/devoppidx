@@ -2,21 +2,21 @@
 var map = L.map('my-map').setView([40.692874,-73.939018], 10);
 
 //basemap
-L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
- attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
- subdomains: 'abcd',
+L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+	subdomains: 'abcd',
  maxZoom: 19
 }).addTo(map);
 
 function getColor(d) {
-    return d > 120 ? '#800026' :
-           d > 80  ? '#BD0026' :
-           d > 40  ? '#E31A1C' :
-           d > 0  ? '#FC4E2A' :
-           d > -40   ? '#FD8D3C' :
-           d > -80   ? '#FEB24C' :
-           d > -120   ? '#FED976' :
-                      '#FFEDA0';
+    return d > 120 ? '#005a32' :
+           d > 80  ? '#238443' :
+           d > 40  ? '#41ab5d' :
+           d > 0  ? '#78c679' :
+           d > -40   ? '#addd8e' :
+           d > -80   ? '#d9f0a3' :
+           d > -120   ? '#f7fcb9' :
+                      '#ffffe5';
 }
 
 
@@ -31,19 +31,26 @@ function onEachFeature(feature, layer) {
 
 function style(feature) {
     return {
-        fillColor: getColor(feature.properties.idx),
-        weight: .25,
-        // opacity: 1,
-        color: getColor(feature.properties.idx),
-        // dashArray: '3',
-        // fillOpacity: 1
+      fillColor: getColor(feature.properties.idx),
+      weight: 0,
+      opacity: 0,
+      color: "lightgrey",
+      // dashArray: '3',
+      fillOpacity: 1
     };
-}
+};
 
 
 L.geoJSON(prelim_data_one, {
     onEachFeature: onEachFeature,
-    style: style
+    style: {
+      fillColor: '#78c679',
+      weight: 0,
+      opacity: 0,
+      color: "lightgrey",
+      // dashArray: '3',
+      fillOpacity: 1
+    }
 }).addTo(map);
 
 
@@ -143,16 +150,6 @@ $('#updateBox').click(function() {
     idx[1]*minMaxNorm(tripMin, tripMax, feature.properties.pct_traveltime_under30mins) +
     idx[0]*minMaxNorm(vacancyMin, vacancyMax, feature.properties.pct_vacantunits));
     feature.properties.idx = score
-  };
-  function style(feature) {
-      return {
-          fillColor: getColor(feature.properties.idx),
-          weight: 2,
-          opacity: 1,
-          color: 'white',
-          dashArray: '3',
-          fillOpacity: 0.7
-      };
   };
   L.geoJSON(prelim_data_one, {
       onEachFeature: onEachFeature_fun,
