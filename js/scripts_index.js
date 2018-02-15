@@ -8,110 +8,45 @@ L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x
  maxZoom: 19
 }).addTo(map);
 
+function getColor(d) {
+    return d > 120 ? '#800026' :
+           d > 80  ? '#BD0026' :
+           d > 40  ? '#E31A1C' :
+           d > 0  ? '#FC4E2A' :
+           d > -40   ? '#FD8D3C' :
+           d > -80   ? '#FEB24C' :
+           d > -120   ? '#FED976' :
+                      '#FFEDA0';
+}
+
+
+
 function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.Address) {
         layer.bindPopup(feature.properties.Address);
     }
+    feature.properties.idx = 0
 }
 
-var myStyle = {
-    "color": "#ff7800",
-};
+function style(feature) {
+    return {
+        fillColor: getColor(feature.properties.idx),
+        weight: .25,
+        // opacity: 1,
+        color: getColor(feature.properties.idx),
+        // dashArray: '3',
+        // fillOpacity: 1
+    };
+}
+
 
 L.geoJSON(prelim_data_one, {
     onEachFeature: onEachFeature,
-    style: myStyle
+    style: style
 }).addTo(map);
 
-// prelim_data_one.forEach(function(object) {
-//   address= object.Address;
-//   marker.bindPopup(address)
-// });
 
-
-
-// var pizzaData = [
-//   {
-//     name: 'Chris',
-//     pizzaShop: "Ben's Pizza",
-//     lat: 40.730376,
-//     lon: -74.0008582,
-//     school: 'Wagner',
-//   },
-//   {
-//     name: 'Maxwell',
-//     pizzaShop: "Joe's",
-//     lat: 40.7305876,
-//     lon: -74.002141,
-//     school: 'Wagner',
-//   },
-//   {
-//     name: 'Paolo',
-//     pizzaShop: "John's of Bleeker",
-//     lat: 40.725717,
-//     lon: -73.991492,
-//     school: 'Wagner',
-//   },
-//   {
-//     name: 'Rigel',
-//     pizzaShop: "Di Fara",
-//     lat: 40.6250156,
-//     lon: -73.9659225,
-//     school: 'Life',
-//   },
-//   {
-//     name: 'Jack',
-//     pizzaShop: "Paulie Gee's",
-//     lat: 40.729662,
-//     lon: -73.958579,
-//     school: 'CUSP',
-//   },
-//   {
-//     name: 'Lisanne',
-//     pizzaShop: "ZuriLee",
-//     lat: 40.6545,
-//     lon: -73.9594,
-//     school: 'Life',
-//   },
-//   {
-//     name: 'Niki',
-//     pizzaShop: "Pizza Palace",
-//     lat: 40.77638,
-//     lon: -73.9112052,
-//     school: 'Life',
-//   },
-//   {
-//     name: 'Monica',
-//     pizzaShop: "Percy's Pizza",
-//     lat: 40.72915,
-//     lon: -74.001398,
-//     school: 'Wagner',
-//   },
-// ];
-//
-// //add a marker for each object in array
-// pizzaData.forEach(function(object) {
-//   var latlon = [object.lat,object.lon];
-//   var schoolColor = 'black';
-//   if(object.school == 'Wagner') schoolColor = 'purple';
-//   if(object.school == 'CUSP') schoolColor = 'green';
-//   if(object.school == 'Life') schoolColor = 'orange';
-//   var options = {
-//     radius: 10,
-//     fillColor: schoolColor,
-//     weight: 6,
-//     stroke: false,
-//     fillOpacity: .75,
-//   };
-//   L.circleMarker(latlon, options).addTo(map)
-//       .bindPopup(object.name + " likes to eat at " + object.pizzaShop);
-// });
-//
-// $('#fly_to').click(function() {
-//   var randomPizza = pizzaData[(Math.floor(Math.random()*pizzaData.length))];
-//   map.flyTo([randomPizza.lat, randomPizza.lon], 20);
-// });
 
 //random color generator
 function getRandomColor() {
@@ -128,40 +63,140 @@ var text = $(this).text()
 console.log('You moused over ' + text);
 });
 
+function getMax(arr, prop) {
+    var max;
+    for (var i=0 ; i<arr.length ; i++) {
+        if (!max || parseInt(arr[i][prop]) > parseInt(max[prop]))
+            max = arr[i];
+    }
+    return max;
+}
+
+function getMin(arr, prop) {
+    var min;
+    for (var i=0 ; i<arr.length ; i++) {
+        if (!min || parseInt(arr[i][prop]) < parseInt(min[prop]))
+            min = arr[i];
+    }
+    return min;
+}
+
+function minMaxNorm(min, max, val) {
+  norm = (val - min) / (max - min)
+  return norm
+}
+
+var vacancyMin = getMin("prelim_data_one", 'vacancy');
+var vacancyMax = getMax("prelim_data_one", 'vacancy');
+var tripMin = getMin("prelim_data_one", 'shortTrip');
+var tripMax = getMax("prelim_data_one", 'shortTrip');
+var highRentMin = getMin("prelim_data_one", 'highRent');
+var highRentMax = getMax("prelim_data_one", 'highRent');
+var renterMin = getMin("prelim_data_one", 'renter');
+var renterMax = getMax("prelim_data_one", 'renter');
+var ownerMin = getMin("prelim_data_one", 'owners');
+var ownerMax = getMax("prelim_data_one", 'owners');
+var recentMoveMin = getMin("prelim_data_one", 'recentMove');
+var recentMoveMax = getMax("prelim_data_one", 'recentMove');
+var unemployedMin = getMin("prelim_data_one", 'unemployed');
+var unemployedMax = getMax("prelim_data_one", 'unemployed');
+var whiteMin = getMin("prelim_data_one", 'white');
+var whiteMax = getMax("prelim_data_one", 'white');
+var povertyMin = getMin("prelim_data_one", 'poverty');
+var povertyMax = getMax("prelim_data_one", 'poverty');
+var elderlyMin = getMin("prelim_data_one", 'elderly');
+var elderlyMax = getMax("prelim_data_one", 'elderly');
+var childrenMin = getMin("prelim_data_one", 'children');
+var childrenMax = getMax("prelim_data_one", 'children');
+var highIncomeMin = getMin("prelim_data_one", 'highIncome');
+var highIncomeMax = getMax("prelim_data_one", 'highIncome');
+var hsMinusMin = getMin("prelim_data_one", 'hsMinus');
+var hsMinusMax = getMax("prelim_data_one", 'hsMinus');
+var collegePlusMin = getMin("prelim_data_one", 'collegePlus');
+var collegePlusMax = getMax("prelim_data_one", 'collegePlus');
+var oldHousingMin = getMin("prelim_data_one", 'renter');
+var oldHousingMax = getMax("prelim_data_one", 'renter');
+var newHousingMin = getMin("prelim_data_one", 'renter');
+var newHousingMax = getMax("prelim_data_one", 'renter');
+
+
+
 $('#updateBox').click(function() {
-var r = $("#red").val(); var g = $("#green").val(); var b = $("#blue").val();
-$('.currentColor').css("background-color", "rgb(" + r + "," + g +", " + b + ")");
-if($('#changeBorder').prop('checked')) {
-  $('.currentColor').css("border", "0px");
-  $('.currentColor').text("Box Color: " + "rgb(" + r + "," + g +", " + b + ")" +
-  "\n" + "Border Color: N/A");
-} else {
-  $('.currentColor').css("border", "25px solid green");
-  $('.currentColor').text("Box Color: " + "rgb(" + r + "," + g +", " + b + ")" +
-  "\n" + "Border Color: green");
-}
-});
+  var idx = [$("#vacancy").val(), $("#shortTrip").val(), $("#highRent").val(), $("#renter").val(),
+  $("#owners").val(), $("#recentMove").val(), $("#unemployed").val(), $("#white").val(),
+  $("#poverty").val(), $("#elderly").val(), $("#children").val(), $("#highIncome").val(),
+  $("#hsMinus").val(), $("#collegePlus").val(), $("#oldHousing").val(), $("#newHousing").val()];
+  L.geoJSON.clearLayers();
+  function onEachFeature_fun(feature, layer) {
+    var score = (idx[15]*minMaxNorm(newHousingMin, newHousingMax, feature.properties.pct_builtafter2010) +
+    idx[14]*minMaxNorm(oldHousingMin, oldHousingMax, feature.properties.pct_builtbefore1940) +
+    idx[13]*minMaxNorm(collegePlusMin, collegePlusMax, feature.properties.pct_withcollegeplus) +
+    idx[12]*minMaxNorm(hsMinusMin, hsMinusMax, feature.properties.pct_withoutHS) +
+    idx[11]*minMaxNorm(highIncomeMin, highIncomeMax, feature.properties.pct_HHincomegreater100k) +
+    idx[10]*minMaxNorm(childrenMin, childrenMax, feature.properties.pct_children) +
+    idx[9]*minMaxNorm(elderlyMin, elderlyMax, feature.properties.pct_olderthan65) +
+    idx[8]*minMaxNorm(povertyMin, povertyMax, (1-feature.properties.pct_notinpoverty)) +
+    idx[7]*minMaxNorm(whiteMin, whiteMax, feature.properties.pct_white) +
+    idx[6]*minMaxNorm(unemployedMin, unemployedMax, feature.properties.pct_unemployed) +
+    idx[5]*minMaxNorm(recentMoveMin, recentMoveMax, feature.properties.pct_movedin_2010orlater) +
+    idx[4]*minMaxNorm(ownerMin, ownerMax, feature.properties.pct_ownership) +
+    idx[3]*minMaxNorm(renterMin, renterMax, feature.properties.pct_renters) +
+    idx[2]*minMaxNorm(highRentMin, highRentMax, feature.properties.pct_rent_2000plus) +
+    idx[1]*minMaxNorm(tripMin, tripMax, feature.properties.pct_traveltime_under30mins) +
+    idx[0]*minMaxNorm(vacancyMin, vacancyMax, feature.properties.pct_vacantunits));
+    feature.properties.idx = score
+  }
+  function style(feature) {
+      return {
+          fillColor: getColor(feature.properties.idx),
+          weight: 2,
+          opacity: 1,
+          color: 'white',
+          dashArray: '3',
+          fillOpacity: 0.7
+      };
+  }
+  L.geoJSON(prelim_data_one, {
+      onEachFeature: onEachFeature_fun,
+      style: style
+  }).addTo(map);
+})
+//
+//
+//
+//
+// $('.currentColor').css("background-color", "rgb(" + r + "," + g +", " + b + ")");
+// if($('#changeBorder').prop('checked')) {
+//   $('.currentColor').css("border", "0px");
+//   $('.currentColor').text("Box Color: " + "rgb(" + r + "," + g +", " + b + ")" +
+//   "\n" + "Border Color: N/A");
+// } else {
+//   $('.currentColor').css("border", "25px solid green");
+//   $('.currentColor').text("Box Color: " + "rgb(" + r + "," + g +", " + b + ")" +
+//   "\n" + "Border Color: green");
+// }
+// });
 
-var sliderRed = document.getElementById("red");
-var outputRed = document.getElementById("redval");
-outputRed.innerHTML = sliderRed.value;
-
-sliderRed.oninput = function() {
-  outputRed.innerHTML = this.value;
-}
-
-var sliderGreen = document.getElementById("green");
-var outputGreen = document.getElementById("greenval");
-outputGreen.innerHTML = sliderGreen.value;
-
-sliderGreen.oninput = function() {
-  outputGreen.innerHTML = this.value;
-}
-
-var sliderBlue = document.getElementById("blue");
-var outputBlue = document.getElementById("blueval");
-outputBlue.innerHTML = sliderBlue.value;
-
-sliderBlue.oninput = function() {
-  outputBlue.innerHTML = this.value;
-}
+// var sliderRed = document.getElementById("red");
+// var outputRed = document.getElementById("redval");
+// outputRed.innerHTML = sliderRed.value;
+//
+// sliderRed.oninput = function() {
+//   outputRed.innerHTML = this.value;
+// }
+//
+// var sliderGreen = document.getElementById("green");
+// var outputGreen = document.getElementById("greenval");
+// outputGreen.innerHTML = sliderGreen.value;
+//
+// sliderGreen.oninput = function() {
+//   outputGreen.innerHTML = this.value;
+// }
+//
+// var sliderBlue = document.getElementById("blue");
+// var outputBlue = document.getElementById("blueval");
+// outputBlue.innerHTML = sliderBlue.value;
+//
+// sliderBlue.oninput = function() {
+//   outputBlue.innerHTML = this.value;
+// }
