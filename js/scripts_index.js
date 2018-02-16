@@ -40,8 +40,7 @@ function style(feature) {
     };
 };
 
-
-L.geoJSON(prelim_data_one, {
+var prop_layer = L.geoJSON(prelim_data_one, {
     onEachFeature: onEachFeature,
     style: {
       fillColor: '#78c679',
@@ -51,9 +50,9 @@ L.geoJSON(prelim_data_one, {
       // dashArray: '3',
       fillOpacity: 1
     }
-}).addTo(map);
+});
 
-
+prop_layer.addTo(map);
 
 //random color generator
 function getRandomColor() {
@@ -125,36 +124,61 @@ var oldHousingMin = getMin("prelim_data_one", 'renter');
 var oldHousingMax = getMax("prelim_data_one", 'renter');
 var newHousingMin = getMin("prelim_data_one", 'renter');
 var newHousingMax = getMax("prelim_data_one", 'renter');
+console.log(newHousingMin, newHousingMax);
 
 $('#updateBox').click(function() {
   var idx = [$("#vacancy").val(), $("#shortTrip").val(), $("#highRent").val(), $("#renter").val(),
   $("#owners").val(), $("#recentMove").val(), $("#unemployed").val(), $("#white").val(),
   $("#poverty").val(), $("#elderly").val(), $("#children").val(), $("#highIncome").val(),
   $("#hsMinus").val(), $("#collegePlus").val(), $("#oldHousing").val(), $("#newHousing").val()];
-  // L.geoJSON.clearLayers();
-  function onEachFeature_fun(feature, layer) {
-    var score = (idx[15]*minMaxNorm(newHousingMin, newHousingMax, feature.properties.pct_builtafter2010) +
-    idx[14]*minMaxNorm(oldHousingMin, oldHousingMax, feature.properties.pct_builtbefore1940) +
-    idx[13]*minMaxNorm(collegePlusMin, collegePlusMax, feature.properties.pct_withcollegeplus) +
-    idx[12]*minMaxNorm(hsMinusMin, hsMinusMax, feature.properties.pct_withoutHS) +
-    idx[11]*minMaxNorm(highIncomeMin, highIncomeMax, feature.properties.pct_HHincomegreater100k) +
-    idx[10]*minMaxNorm(childrenMin, childrenMax, feature.properties.pct_children) +
-    idx[9]*minMaxNorm(elderlyMin, elderlyMax, feature.properties.pct_olderthan65) +
-    idx[8]*minMaxNorm(povertyMin, povertyMax, (1-feature.properties.pct_notinpoverty)) +
-    idx[7]*minMaxNorm(whiteMin, whiteMax, feature.properties.pct_white) +
-    idx[6]*minMaxNorm(unemployedMin, unemployedMax, feature.properties.pct_unemployed) +
-    idx[5]*minMaxNorm(recentMoveMin, recentMoveMax, feature.properties.pct_movedin_2010orlater) +
-    idx[4]*minMaxNorm(ownerMin, ownerMax, feature.properties.pct_ownership) +
-    idx[3]*minMaxNorm(renterMin, renterMax, feature.properties.pct_renters) +
-    idx[2]*minMaxNorm(highRentMin, highRentMax, feature.properties.pct_rent_2000plus) +
-    idx[1]*minMaxNorm(tripMin, tripMax, feature.properties.pct_traveltime_under30mins) +
-    idx[0]*minMaxNorm(vacancyMin, vacancyMax, feature.properties.pct_vacantunits));
-    feature.properties.idx = score
-  };
-  L.geoJSON(prelim_data_one, {
-      onEachFeature: onEachFeature_fun,
-      style: style
-  }).addTo(map);
+  prop_layer.eachLayer(function(layer, feature) {
+		if (layer.feature.properties && layer.feature.properties.Address) {
+        layer.bindPopup(layer.feature.properties.Address);
+    };
+		var score = (idx[15]*minMaxNorm(newHousingMin, newHousingMax, layer.feature.properties.pct_builtafter2010) +
+    idx[14]*minMaxNorm(oldHousingMin, oldHousingMax, layer.feature.properties.pct_builtbefore1940) +
+    idx[13]*minMaxNorm(collegePlusMin, collegePlusMax, layer.feature.properties.pct_withcollegeplus) +
+    idx[12]*minMaxNorm(hsMinusMin, hsMinusMax, layer.feature.properties.pct_withoutHS) +
+    idx[11]*minMaxNorm(highIncomeMin, highIncomeMax, layer.feature.properties.pct_HHincomegreater100k) +
+    idx[10]*minMaxNorm(childrenMin, childrenMax, layer.feature.properties.pct_children) +
+    idx[9]*minMaxNorm(elderlyMin, elderlyMax, layer.feature.properties.pct_olderthan65) +
+    idx[8]*minMaxNorm(povertyMin, povertyMax, (1-layer.feature.properties.pct_notinpoverty)) +
+    idx[7]*minMaxNorm(whiteMin, whiteMax, layer.feature.properties.pct_white) +
+    idx[6]*minMaxNorm(unemployedMin, unemployedMax, layer.feature.properties.pct_unemployed) +
+    idx[5]*minMaxNorm(recentMoveMin, recentMoveMax, layer.feature.properties.pct_movedin_2010orlater) +
+    idx[4]*minMaxNorm(ownerMin, ownerMax, layer.feature.properties.pct_ownership) +
+    idx[3]*minMaxNorm(renterMin, renterMax, layer.feature.properties.pct_renters) +
+    idx[2]*minMaxNorm(highRentMin, highRentMax, layer.feature.properties.pct_rent_2000plus) +
+    idx[1]*minMaxNorm(tripMin, tripMax, layer.feature.properties.pct_traveltime_under30mins) +
+    idx[0]*minMaxNorm(vacancyMin, vacancyMax, layer.feature.properties.pct_vacantunits));
+    layer.feature.properties.idx = score;
+		layer.feature.properties.color = getColor(score);
+		console.log(score);
+		layer.setStyle({
+			fillColor: layer.feature.properties.color,
+      weight: 0,
+      opacity: 0,
+      color: "lightgrey",
+      // dashArray: '3',
+      fillOpacity: 1
+		});
+  });
+  //
+	// var prop_layer = L.geoJSON(prelim_data_one, {
+  //     onEachFeature: onEachFeature_fun,
+  //     style: function(feature){
+	// 			color = feature.properties.color;
+	// 			return {
+	// 	      fillColor: color,
+	// 	      weight: 0,
+	// 	      opacity: 0,
+	// 	      color: "lightgrey",
+	// 	      // dashArray: '3',
+	// 	      fillOpacity: 1
+	// 	    }
+	//     }
+  // });
+  // prop_layer.addTo(map);
 })
 
 

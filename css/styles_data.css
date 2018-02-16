@@ -76,9 +76,14 @@ a.data_list:hover{
   text-decoration: none;
 }
 
-.nav a:active {
+.active {
     text-decoration: underline;
     text-decoration-color: white;
+}
+
+#testing {
+  text-decoration: underline;
+  text-decoration-color: white;
 }
 
 #header {
