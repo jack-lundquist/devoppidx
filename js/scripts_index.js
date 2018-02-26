@@ -24,7 +24,7 @@ function getColor(d) {
 function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.Address) {
-        layer.bindPopup(feature.properties.Address);
+        layer.bindPopup("Address: " + feature.properties.Address + "\n" + "BBL: " + feature.properties.BBL);
     }
     feature.properties.idx = 0
 }
@@ -40,7 +40,7 @@ function style(feature) {
     };
 };
 
-var prop_layer = L.geoJSON(prelim_data_one, {
+var prop_layer = L.geoJSON(data_norm, {
     onEachFeature: onEachFeature,
     style: {
       fillColor: '#78c679',
@@ -54,80 +54,15 @@ var prop_layer = L.geoJSON(prelim_data_one, {
 
 prop_layer.addTo(map);
 
-//random color generator
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
 
 $('li').mouseover(function() {
 var text = $(this).text()
 console.log('You moused over ' + text);
 });
 
-function getMax(arr, prop) {
-    var max;
-    for (var i=0 ; i<arr.length ; i++) {
-        if (!max || parseInt(arr[i][prop]) > parseInt(max[prop]))
-            max = arr[i];
-    }
-    return max;
-}
-
-function getMin(arr, prop) {
-    var min;
-    for (var i=0 ; i<arr.length ; i++) {
-        if (!min || parseInt(arr[i][prop]) < parseInt(min[prop]))
-            min = arr[i];
-    }
-    return min;
-}
-
-function minMaxNorm(min, max, val) {
-  norm = (val - min) / (max - min)
-  return norm
-}
-
-var vacancyMin = getMin("prelim_data_one", 'vacancy');
-var vacancyMax = getMax("prelim_data_one", 'vacancy');
-var tripMin = getMin("prelim_data_one", 'shortTrip');
-var tripMax = getMax("prelim_data_one", 'shortTrip');
-var highRentMin = getMin("prelim_data_one", 'highRent');
-var highRentMax = getMax("prelim_data_one", 'highRent');
-var renterMin = getMin("prelim_data_one", 'renter');
-var renterMax = getMax("prelim_data_one", 'renter');
-var ownerMin = getMin("prelim_data_one", 'owners');
-var ownerMax = getMax("prelim_data_one", 'owners');
-var recentMoveMin = getMin("prelim_data_one", 'recentMove');
-var recentMoveMax = getMax("prelim_data_one", 'recentMove');
-var unemployedMin = getMin("prelim_data_one", 'unemployed');
-var unemployedMax = getMax("prelim_data_one", 'unemployed');
-var whiteMin = getMin("prelim_data_one", 'white');
-var whiteMax = getMax("prelim_data_one", 'white');
-var povertyMin = getMin("prelim_data_one", 'poverty');
-var povertyMax = getMax("prelim_data_one", 'poverty');
-var elderlyMin = getMin("prelim_data_one", 'elderly');
-var elderlyMax = getMax("prelim_data_one", 'elderly');
-var childrenMin = getMin("prelim_data_one", 'children');
-var childrenMax = getMax("prelim_data_one", 'children');
-var highIncomeMin = getMin("prelim_data_one", 'highIncome');
-var highIncomeMax = getMax("prelim_data_one", 'highIncome');
-var hsMinusMin = getMin("prelim_data_one", 'hsMinus');
-var hsMinusMax = getMax("prelim_data_one", 'hsMinus');
-var collegePlusMin = getMin("prelim_data_one", 'collegePlus');
-var collegePlusMax = getMax("prelim_data_one", 'collegePlus');
-var oldHousingMin = getMin("prelim_data_one", 'renter');
-var oldHousingMax = getMax("prelim_data_one", 'renter');
-var newHousingMin = getMin("prelim_data_one", 'renter');
-var newHousingMax = getMax("prelim_data_one", 'renter');
-console.log(newHousingMin, newHousingMax);
 
 $('#updateBox').click(function() {
-  var idx = [$("#vacancy").val(), $("#shortTrip").val(), $("#highRent").val(), $("#renter").val(),
+  var idx = [$("#vacancy").val(), $("#shortTrip").val(), $("#highRent").val(), $("#renters").val(),
   $("#owners").val(), $("#recentMove").val(), $("#unemployed").val(), $("#white").val(),
   $("#poverty").val(), $("#elderly").val(), $("#children").val(), $("#highIncome").val(),
   $("#hsMinus").val(), $("#collegePlus").val(), $("#oldHousing").val(), $("#newHousing").val()];
@@ -135,25 +70,26 @@ $('#updateBox').click(function() {
 		if (layer.feature.properties && layer.feature.properties.Address) {
         layer.bindPopup(layer.feature.properties.Address);
     };
-		var score = (idx[15]*minMaxNorm(newHousingMin, newHousingMax, layer.feature.properties.pct_builtafter2010) +
-    idx[14]*minMaxNorm(oldHousingMin, oldHousingMax, layer.feature.properties.pct_builtbefore1940) +
-    idx[13]*minMaxNorm(collegePlusMin, collegePlusMax, layer.feature.properties.pct_withcollegeplus) +
-    idx[12]*minMaxNorm(hsMinusMin, hsMinusMax, layer.feature.properties.pct_withoutHS) +
-    idx[11]*minMaxNorm(highIncomeMin, highIncomeMax, layer.feature.properties.pct_HHincomegreater100k) +
-    idx[10]*minMaxNorm(childrenMin, childrenMax, layer.feature.properties.pct_children) +
-    idx[9]*minMaxNorm(elderlyMin, elderlyMax, layer.feature.properties.pct_olderthan65) +
-    idx[8]*minMaxNorm(povertyMin, povertyMax, (1-layer.feature.properties.pct_notinpoverty)) +
-    idx[7]*minMaxNorm(whiteMin, whiteMax, layer.feature.properties.pct_white) +
-    idx[6]*minMaxNorm(unemployedMin, unemployedMax, layer.feature.properties.pct_unemployed) +
-    idx[5]*minMaxNorm(recentMoveMin, recentMoveMax, layer.feature.properties.pct_movedin_2010orlater) +
-    idx[4]*minMaxNorm(ownerMin, ownerMax, layer.feature.properties.pct_ownership) +
-    idx[3]*minMaxNorm(renterMin, renterMax, layer.feature.properties.pct_renters) +
-    idx[2]*minMaxNorm(highRentMin, highRentMax, layer.feature.properties.pct_rent_2000plus) +
-    idx[1]*minMaxNorm(tripMin, tripMax, layer.feature.properties.pct_traveltime_under30mins) +
-    idx[0]*minMaxNorm(vacancyMin, vacancyMax, layer.feature.properties.pct_vacantunits));
+		var score = parseFloat(((parseFloat(idx[15])*parseFloat(layer.feature.properties.pct_builtafter2010_norm)) +
+    (parseFloat(idx[14])*parseFloat(layer.feature.properties.pct_builtbefore1940_norm)) +
+    (parseFloat(idx[13])*parseFloat(layer.feature.properties.pct_withcollegeplus_norm)) +
+    (parseFloat(idx[12])*parseFloat(layer.feature.properties.pct_withoutHS_norm)) +
+    (parseFloat(idx[11])*parseFloat(layer.feature.properties.pct_HHincomegreater100k_norm)) +
+    (parseFloat(idx[10])*parseFloat(layer.feature.properties.pct_children_norm)) +
+    (parseFloat(idx[9])*parseFloat(layer.feature.properties.pct_olderthan65_norm)) +
+    (parseFloat(idx[8])*parseFloat(layer.feature.properties.pct_inPoverty_norm)) +
+    (parseFloat(idx[7])*parseFloat(layer.feature.properties.pct_white_norm)) +
+    (parseFloat(idx[6])*parseFloat(layer.feature.properties.pct_unemployed_norm)) +
+    (parseFloat(idx[5])*parseFloat(layer.feature.properties.pct_movedin_2010pct_movedin_2010orlater_norm)) +
+    (parseFloat(idx[4])*parseFloat(layer.feature.properties.pct_ownership_norm)) +
+    (parseFloat(idx[3])*parseFloat(layer.feature.properties.pct_renters_norm)) +
+    (parseFloat(idx[2])*parseFloat(layer.feature.properties.pct_rent_2000pct_rent_2000plus_norm)) +
+    (parseFloat(idx[1])*parseFloat(layer.feature.properties.pct_traveltime_under30mins_norm)) +
+    (parseFloat(idx[0])*parseFloat(layer.feature.properties.pct_vacantunits_norm))));
     layer.feature.properties.idx = score;
 		layer.feature.properties.color = getColor(score);
 		console.log(score);
+		console.log(idx);
 		layer.setStyle({
 			fillColor: layer.feature.properties.color,
       weight: 0,
@@ -163,22 +99,6 @@ $('#updateBox').click(function() {
       fillOpacity: 1
 		});
   });
-  //
-	// var prop_layer = L.geoJSON(prelim_data_one, {
-  //     onEachFeature: onEachFeature_fun,
-  //     style: function(feature){
-	// 			color = feature.properties.color;
-	// 			return {
-	// 	      fillColor: color,
-	// 	      weight: 0,
-	// 	      opacity: 0,
-	// 	      color: "lightgrey",
-	// 	      // dashArray: '3',
-	// 	      fillOpacity: 1
-	// 	    }
-	//     }
-  // });
-  // prop_layer.addTo(map);
 })
 
 
