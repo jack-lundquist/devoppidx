@@ -9,13 +9,13 @@ L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}
 }).addTo(map);
 
 function getColor(d) {
-    return d > 120 ? '#005a32' :
-           d > 80  ? '#238443' :
-           d > 40  ? '#41ab5d' :
+    return d > 16 ? '#005a32' :
+           d > 10  ? '#238443' :
+           d > 5  ? '#41ab5d' :
            d > 0  ? '#78c679' :
-           d > -40   ? '#addd8e' :
-           d > -80   ? '#d9f0a3' :
-           d > -120   ? '#f7fcb9' :
+           d > -5   ? '#addd8e' :
+           d > -10   ? '#d9f0a3' :
+           d > -16   ? '#f7fcb9' :
                       '#ffffe5';
 }
 
@@ -67,29 +67,30 @@ $('#updateBox').click(function() {
   $("#poverty").val(), $("#elderly").val(), $("#children").val(), $("#highIncome").val(),
   $("#hsMinus").val(), $("#collegePlus").val(), $("#oldHousing").val(), $("#newHousing").val()];
   prop_layer.eachLayer(function(layer, feature) {
-		if (layer.feature.properties && layer.feature.properties.Address) {
-        layer.bindPopup(layer.feature.properties.Address);
-    };
-		var score = parseFloat(((parseFloat(idx[15])*parseFloat(layer.feature.properties.pct_builtafter2010_norm)) +
-    (parseFloat(idx[14])*parseFloat(layer.feature.properties.pct_builtbefore1940_norm)) +
-    (parseFloat(idx[13])*parseFloat(layer.feature.properties.pct_withcollegeplus_norm)) +
-    (parseFloat(idx[12])*parseFloat(layer.feature.properties.pct_withoutHS_norm)) +
-    (parseFloat(idx[11])*parseFloat(layer.feature.properties.pct_HHincomegreater100k_norm)) +
-    (parseFloat(idx[10])*parseFloat(layer.feature.properties.pct_children_norm)) +
-    (parseFloat(idx[9])*parseFloat(layer.feature.properties.pct_olderthan65_norm)) +
-    (parseFloat(idx[8])*parseFloat(layer.feature.properties.pct_inPoverty_norm)) +
-    (parseFloat(idx[7])*parseFloat(layer.feature.properties.pct_white_norm)) +
-    (parseFloat(idx[6])*parseFloat(layer.feature.properties.pct_unemployed_norm)) +
-    (parseFloat(idx[5])*parseFloat(layer.feature.properties.pct_movedin_2010pct_movedin_2010orlater_norm)) +
-    (parseFloat(idx[4])*parseFloat(layer.feature.properties.pct_ownership_norm)) +
-    (parseFloat(idx[3])*parseFloat(layer.feature.properties.pct_renters_norm)) +
-    (parseFloat(idx[2])*parseFloat(layer.feature.properties.pct_rent_2000pct_rent_2000plus_norm)) +
-    (parseFloat(idx[1])*parseFloat(layer.feature.properties.pct_traveltime_under30mins_norm)) +
-    (parseFloat(idx[0])*parseFloat(layer.feature.properties.pct_vacantunits_norm))));
+		features = [layer.feature.properties.pct_vacantunits_norm, layer.feature.properties.pct_traveltime_under30mins_norm,
+		layer.feature.properties.pct_rent_2000plus_norm, layer.feature.properties.pct_renters_norm,
+	layer.feature.properties.pct_ownership_norm, layer.feature.properties.pct_movedin_2010orlater_norm,
+	layer.feature.properties.pct_unemployed_norm, layer.feature.properties.pct_white_norm,
+	layer.feature.properties.pct_inPoverty_norm, layer.feature.properties.pct_olderthan65_norm,
+(1-layer.feature.properties.pct_olderthan18_norm), layer.feature.properties.pct_HHincomegreater100k_norm,
+layer.feature.properties.pct_withoutHS_norm, layer.feature.properties.pct_withcollegeplus_norm,
+layer.feature.properties.pct_builtbefore1940_norm, layer.feature.properties.pct_builtafter2010_norm];
+		var score = 0;
+		for(var i=0; i< idx.length; i++) {
+    	score += idx[i]*features[i];
+				}
     layer.feature.properties.idx = score;
 		layer.feature.properties.color = getColor(score);
+		if (layer.feature.properties && layer.feature.properties.Address) {
+        layer.bindPopup("Address: " + layer.feature.properties.Address + "\n" + "BBL: " + layer.feature.properties.BBL
+			+ "\n" + "Index Score: " + layer.feature.properties.idx);
+    };
+		console.log(features);
 		console.log(score);
-		console.log(idx);
+		console.log(getColor(score));
+		console.log(idx[1]);
+		console.log(layer.feature.properties.idx)
+		console.log(layer.feature.properties.pct_traveltime_15to30mins)
 		layer.setStyle({
 			fillColor: layer.feature.properties.color,
       weight: 0,
@@ -100,6 +101,24 @@ $('#updateBox').click(function() {
 		});
   });
 })
+
+
+// parseFloat(((parseFloat(idx[15])*parseFloat(layer.feature.properties.pct_builtafter2010_norm)) +
+// (parseFloat(idx[14])*parseFloat(layer.feature.properties.pct_builtbefore1940_norm)) +
+// (parseFloat(idx[13])*parseFloat(layer.feature.properties.pct_withcollegeplus_norm)) +
+// (parseFloat(idx[12])*parseFloat(layer.feature.properties.pct_withoutHS_norm)) +
+// (parseFloat(idx[11])*parseFloat(layer.feature.properties.pct_HHincomegreater100k_norm)) +
+// (parseFloat(idx[10])*parseFloat(layer.feature.properties.pct_children_norm)) +
+// (parseFloat(idx[9])*parseFloat(layer.feature.properties.pct_olderthan65_norm)) +
+// (parseFloat(idx[8])*parseFloat(layer.feature.properties.pct_inPoverty_norm)) +
+// (parseFloat(idx[7])*parseFloat(layer.feature.properties.pct_white_norm)) +
+// (parseFloat(idx[6])*parseFloat(layer.feature.properties.pct_unemployed_norm)) +
+// (parseFloat(idx[5])*parseFloat(layer.feature.properties.pct_movedin_2010pct_movedin_2010orlater_norm)) +
+// (parseFloat(idx[4])*parseFloat(layer.feature.properties.pct_ownership_norm)) +
+// (parseFloat(idx[3])*parseFloat(layer.feature.properties.pct_renters_norm)) +
+// (parseFloat(idx[2])*parseFloat(layer.feature.properties.pct_rent_2000pct_rent_2000plus_norm)) +
+// (parseFloat(idx[1])*parseFloat(layer.feature.properties.pct_traveltime_under30mins_norm)) +
+// (parseFloat(idx[0])*parseFloat(layer.feature.properties.pct_vacantunits_norm))));
 
 
 // var sliderRed = document.getElementById("red");
