@@ -9,14 +9,14 @@ L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}
 }).addTo(map);
 
 function getColor(d) {
-    return d > 16 ? '#005a32' :
-           d > 10  ? '#238443' :
-           d > 5  ? '#41ab5d' :
-           d > 0  ? '#78c679' :
-           d > -5   ? '#addd8e' :
-           d > -10   ? '#d9f0a3' :
-           d > -16   ? '#f7fcb9' :
-                      '#ffffe5';
+    return d > 16 ? '#4FDE02' :
+           d > 10  ? '#83E002' :
+           d > 5  ? '#B8E202' :
+           d > 0  ? '#E4D902' :
+           d > -5   ? '#E6A603' :
+           d > -10   ? '#E87203' :
+           d > -16   ? '#EA3E03' :
+                      '#EC0803';
 }
 
 
