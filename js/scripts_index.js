@@ -5,7 +5,7 @@ var map = L.map('my-map', {scrollWheelZoom:false}).setView([40.692874,-73.939018
 L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
 	subdomains: 'abcd',
- maxZoom: 19
+	maxZoom: 19
 }).addTo(map);
 
 function getColor(d) {
