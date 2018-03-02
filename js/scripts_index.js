@@ -1,5 +1,5 @@
 //map variable
-var map = L.map('my-map').setView([40.692874,-73.939018], 10);
+var map = L.map('my-map', {scrollWheelZoom:false}).setView([40.692874,-73.939018], 11);
 
 //basemap
 L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
@@ -9,16 +9,35 @@ L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}
 }).addTo(map);
 
 function getColor(d) {
-    return d > 16 ? '#4FDE02' :
+    return d > 15 ? '#4FDE02' :
            d > 10  ? '#83E002' :
            d > 5  ? '#B8E202' :
            d > 0  ? '#E4D902' :
            d > -5   ? '#E6A603' :
            d > -10   ? '#E87203' :
-           d > -16   ? '#EA3E03' :
+           d > -15   ? '#EA3E03' :
                       '#EC0803';
 }
 
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [-15, -10, -5, 0, 5, 10, 15],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+
+legend.addTo(map);
 
 
 function onEachFeature(feature, layer) {
@@ -43,7 +62,7 @@ function style(feature) {
 var prop_layer = L.geoJSON(data_norm, {
     onEachFeature: onEachFeature,
     style: {
-      fillColor: '#78c679',
+      fillColor: 'white',
       weight: 0,
       opacity: 0,
       color: "lightgrey",
