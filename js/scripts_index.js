@@ -19,26 +19,6 @@ function getColor(d) {
                       '#EC0803';
 }
 
-var legend = L.control({position: 'bottomright'});
-
-legend.onAdd = function (map) {
-
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [-15, -10, -5, 0, 5, 10, 15],
-        labels = [];
-
-    // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-    }
-
-    return div;
-};
-
-legend.addTo(map);
-
 
 function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
@@ -73,11 +53,25 @@ var prop_layer = L.geoJSON(data_norm, {
 
 prop_layer.addTo(map);
 
+var legend = L.control({position: 'bottomright'});
 
-$('li').mouseover(function() {
-var text = $(this).text()
-console.log('You moused over ' + text);
-});
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [-15, -10, -5, 0, 5, 10, 15],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+
+legend.addTo(map);
 
 
 $('#updateBox').click(function() {

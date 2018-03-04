@@ -50,3 +50,46 @@ h3{
     margin-right: 8px;
     opacity: 0.7;
 }
+
+/* .datasets{
+  text-align: center;
+  background-color: rgba(144,144,144,.7);
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  left: 50%;
+  bottom: 50%;
+  width: 400px;
+  height: 300px;
+  margin-top: -150px;
+  margin-left: -200px;
+}
+
+a{
+  text-decoration: none;
+}
+
+.data_list{
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  display: inline-block;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.data_list a:link, a:visited {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a.data_list:hover{
+    text-decoration: underline;
+}
+
+.subhead{
+  color: white;
+  font-size: 30px;
+  text-align: center;
+} */

@@ -69,9 +69,7 @@
                 (10 is most important and positive, -10 is most important and negative, and 0 removes the feature from the index)
                 <br>
                 </div>
-                <h3 style='text-align: center'>
-                  Census Tract Level Features
-                </h3>
+                <h5 style='text-align: center'><br><br>Neighborhood Building Stock</h5>
                 <div id="featureSelector">
                         <span id="newFeature"></span>
                         <div class="sliders">
@@ -85,7 +83,31 @@
                                 <input id="oldHousing" name="oldHousing" type="range" min=-10 max=10 value=0>
                             </p>
 
+                            <p>
+                                <label for="recentMove">% of Households that Moved in After 2010<span id="recentMoveVal"></span><br></label>
+                                <input id="recentMove" name="recentMove" type="range" min=-10 max=10 value=0>
+                            </p>
 
+                            <p>
+                                <label for="owners">% of Owner-Occupied Units <span id="ownersVal"></span><br></label>
+                                <input id="owners" name="owners" type="range" min=-10 max=10 value=0>
+                            </p>
+
+                            <p>
+                                <label for="renters">% of Renter-Occupied Units<span id="rentersVal"></span><br></label>
+                                <input id="renters" name="renters" type="range" min=-10 max=10 value=0>
+                            </p>
+
+                            <p>
+                                <label for="highRent">% of Households with Rent Greater than $2000/month<span id="highRentVal"></span><br></label>
+                                <input id="highRent" name="highRent" type="range" min=-10 max=10 value=0>
+                            </p>
+                          </div>
+                </div>
+                <h5 style='text-align: center'>Community Characteristics</h5>
+                <div id="featureSelector">
+                        <span id="newFeature"></span>
+                        <div class="sliders">
                             <p>
                                 <label for="collegePlus">% of People with College, Master's, or Doctorate Degree <span id="collegePlusVal"></span><br></label>
                                 <input id="collegePlus" name="collegePlus" type="range" min=-10 max=10 value=0>
@@ -127,27 +149,7 @@
                                 <input id="unemployed" name="unemployed" type="range" min=-10 max=10 value=0>
                             </p>
 
-          <!-- https://www.impressivewebs.com/onchange-vs-oninput-for-range-sliders/ -->
 
-                            <p>
-                                <label for="recentMove">% of Households that Moved in After 2010<span id="recentMoveVal"></span><br></label>
-                                <input id="recentMove" name="recentMove" type="range" min=-10 max=10 value=0>
-                            </p>
-
-                            <p>
-                                <label for="owners">% of Owner-Occupied Units <span id="ownersVal"></span><br></label>
-                                <input id="owners" name="owners" type="range" min=-10 max=10 value=0>
-                            </p>
-
-                            <p>
-                                <label for="renters">% of Renter-Occupied Units<span id="rentersVal"></span><br></label>
-                                <input id="renters" name="renters" type="range" min=-10 max=10 value=0>
-                            </p>
-
-                            <p>
-                                <label for="highRent">% of Households with Rent Greater than $2000/month <span id="highRentVal"></span><br></label>
-                                <input id="highRent" name="highRent" type="range" min=-10 max=10 value=0>
-                            </p>
 
                             <p>
                                 <label for="shortTrip">% of Workers with a Travel Time Less than 30 Minutes<span id="shortTripVal"></span><br></label>
@@ -158,6 +160,9 @@
                                 <label for="vacancy">% of Units Vacant<span id="vacanyVal"></span><br></label>
                                 <input id="vacancy" name="vacancy" type="range" min=-10 max=10 value=0>
                             </p>
+                          </div>
+                </div>
+
                             <div>
                             <button id="updateBox">Update Map!</button>
                             </div>
@@ -165,24 +170,22 @@
                     </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header" role="tab" id="headingTwo">
-            <h5 class="mb-0">
-              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Filters
-              </a>
-            </h5>
-          </div>
-          <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <div class="card-block">
-              Stay Tuned! Filters in progress...
+            <div class="card">
+              <div class="card-header" role="tab" id="headingTwo">
+                <h5 class="mb-0">
+                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Filters
+                  </a>
+                </h5>
+              </div>
+              <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="card-block">
+                  Stay Tuned! Filters in progress...
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
     <div class="col-xs-6 col-md-6">
       <h3 style:"text-align: center; margin-top: 10px;"> <br> Top 10 Properties</h3>
       <ol id='property_list'>
@@ -226,7 +229,18 @@
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <div class='datasets'>
+          <h4 id='box_top'>
+            <a id='box_top_1' class='data_list' href='https://github.com/jack-lundquist/devoppidx/blob/master/js/data_norm.js'> <div class='subhead'>Processed Data <br> <br></div></a>
+          </h4>
+          <h4>
+          <div class='subhead'>
+          Data Sources</div>
+        </h4>
+          <a class='data_list' href='https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page'>
+              PLUTO Data</a>
+          <a class='data_list' href="https://www.census.gov/developers/">Census API</a>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -245,7 +259,11 @@
         </button>
       </div>
       <div class="modal-body">
-        ...
+        This mapping project builds off a project Julián Ferreiro,
+        Jack Lundquist and Rebecca Scheidegger completed for the course
+        "Civic Analytics & Urban Intelligence." This dashboard was created by Jack Lundquist
+        for the course "Advanced GIS: Interactive Web Mapping and Spatial Data Visualization."
+        For more information, email <a href="mailto:jack.lundquist@nyu.edu">jack.lundquist@nyu.edu</a>.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
