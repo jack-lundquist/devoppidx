@@ -42,7 +42,7 @@ function style(feature) {
 var prop_layer = L.geoJSON(data_norm, {
     onEachFeature: onEachFeature,
     style: {
-      fillColor: 'white',
+      fillColor: "#E4D902",
       weight: 0,
       opacity: 0,
       color: "lightgrey",
@@ -74,11 +74,16 @@ legend.onAdd = function (map) {
 legend.addTo(map);
 
 
-$('#updateBox').click(function() {
+function updateMap() {
   var idx = [$("#vacancy").val(), $("#shortTrip").val(), $("#highRent").val(), $("#renters").val(),
   $("#owners").val(), $("#recentMove").val(), $("#unemployed").val(), $("#white").val(),
   $("#poverty").val(), $("#elderly").val(), $("#children").val(), $("#highIncome").val(),
   $("#hsMinus").val(), $("#collegePlus").val(), $("#oldHousing").val(), $("#newHousing").val()];
+	for (var i = 0; i < idx.length; i++) {
+    if(idx[i] > 10) {idx[i] == 10; alert('Please choose values <= 10! Value changed to 10 in index calculation.')};
+		if(idx[i] < -10) {idx[i] == -10; alert('Please choose values => -10! Value changed to -10 in index calculation.')}
+    //Do something
+}
   prop_layer.eachLayer(function(layer, feature) {
 		features = [layer.feature.properties.pct_vacantunits_norm, layer.feature.properties.pct_traveltime_under30mins_norm,
 		layer.feature.properties.pct_rent_2000plus_norm, layer.feature.properties.pct_renters_norm,
@@ -113,7 +118,15 @@ layer.feature.properties.pct_builtbefore1940_norm, layer.feature.properties.pct_
       fillOpacity: 1
 		});
   });
-})
+
+	var data = prop_layer;
+	// var top25_1 = prop_layer.idx.sort(function(a, b) {
+  //   return b - a;
+	// }).slice(0,25);
+	// console.log(top25);
+	var top25_2 = data.sort(function(a, b) { return a.feature.properties.idx < b.feature.properties.idx ? 1 : -1; }).slice(0, 25);
+	console.log(top25_2);
+};
 
 
 // parseFloat(((parseFloat(idx[15])*parseFloat(layer.feature.properties.pct_builtafter2010_norm)) +

@@ -9,9 +9,11 @@
   <meta name="author" content="Jack Lundquist">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
   integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
   crossorigin=""/>
+
 
   <link rel="stylesheet" href="css/styles_index.css" type="text/css">
 
@@ -54,7 +56,9 @@
           <div class="card-header" role="tab" id="headingOne">
             <h5 class="mb-0">
               <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Select Features
+                <h4 style='text-align: center;'>
+                  Select Features
+                </h4>
               </a>
             </h5>
           </div>
@@ -62,45 +66,43 @@
           <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
             <div class="card-block">
               <div class = 'slider_col'>
-                <h2 id='slider_header'>
-                Use the sliders to customize feature importance
-                </h2>
+                <h4 id='slider_header'>
+                <br>Use the sliders to customize feature importance
+                </h4>
                 <div id='slider_description'>
                 (10 is most important and positive, -10 is most important and negative, and 0 removes the feature from the index)
                 <br>
                 </div>
-                <h5 style='text-align: center'><br><br>Neighborhood Building Stock</h5>
+                <h5 style='text-align: center'><br><br>Neighborhood Building Stock<br></h5>
                 <div id="featureSelector">
                         <span id="newFeature"></span>
-                        <div class="sliders">
                             <p>
-                                <label for="newHousing">% of Housing Built After 2010 <span id="newHousingVal"></span><br></label>
-                                <input id="newHousing" name="newHousing" type="range" min=-10 max=10 value=0>
+                              <label for="newHousing">% of Housing Built After 2010 <span id="newHousingVal"></span></label>
+                              <input id="newHousing" type="number" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 name="newHousing" value=0 oninput='updateMap()'>
+                            </p>
+                            <p>
+                                <label for="oldHousing">% of Housing Built Before 1940 <span id="oldHousingVal"></span></label>
+                                <input id="oldHousing" type='number' class="form-control bfh-number" name="oldHousing" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
 
                             <p>
-                                <label for="oldHousing">% of Housing Built Before 1940 <span id="oldHousingVal"></span><br></label>
-                                <input id="oldHousing" name="oldHousing" type="range" min=-10 max=10 value=0>
+                                <label for="recentMove">% of Households that Moved in After 2010<span id="recentMoveVal"></span></label>
+                                <input id="recentMove" type='number' name="recentMove" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
 
                             <p>
-                                <label for="recentMove">% of Households that Moved in After 2010<span id="recentMoveVal"></span><br></label>
-                                <input id="recentMove" name="recentMove" type="range" min=-10 max=10 value=0>
+                                <label for="owners">% of Owner-Occupied Units <span id="ownersVal"></span></label>
+                                <input id="owners" type='number' name="owners" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
 
                             <p>
-                                <label for="owners">% of Owner-Occupied Units <span id="ownersVal"></span><br></label>
-                                <input id="owners" name="owners" type="range" min=-10 max=10 value=0>
+                                <label for="renters">% of Renter-Occupied Units<span id="rentersVal"></span></label>
+                                <input id="renters" type='number' name="renters" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
 
                             <p>
-                                <label for="renters">% of Renter-Occupied Units<span id="rentersVal"></span><br></label>
-                                <input id="renters" name="renters" type="range" min=-10 max=10 value=0>
-                            </p>
-
-                            <p>
-                                <label for="highRent">% of Households with Rent Greater than $2000/month<span id="highRentVal"></span><br></label>
-                                <input id="highRent" name="highRent" type="range" min=-10 max=10 value=0>
+                                <label for="highRent">% of Households with Rent Greater than $2000/month<span id="highRentVal"></span></label>
+                                <input id="highRent" type='number' name="highRent" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
                           </div>
                 </div>
@@ -109,56 +111,54 @@
                         <span id="newFeature"></span>
                         <div class="sliders">
                             <p>
-                                <label for="collegePlus">% of People with College, Master's, or Doctorate Degree <span id="collegePlusVal"></span><br></label>
-                                <input id="collegePlus" name="collegePlus" type="range" min=-10 max=10 value=0>
+                                <label for="collegePlus">% of People with College, Master's, or Doctorate Degree <span id="collegePlusVal"></span></label>
+                                <input id="collegePlus" type='number' name="collegePlus" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
 
                             </p>
 
                             <p>
-                                <label for="hsMinus">% of People with less than a High School Degree <span id="hsMinusVal"></span><br></label>
-                                <input id="hsMinus" name="hsMinus" type="range" min=-10 max=10 value=0>
+                                <label for="hsMinus">% of People with less than a High School Degree <span id="hsMinusVal"></span></label>
+                                <input id="hsMinus" type='number' name="hsMinus" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
 
                             <p>
-                                <label for="highIncome">% of Households with Incomes Higher than $100,000 <span id="highIncomeVal"></span><br></label>
-                                <input id="highIncome" name="highIncome" type="range" min=-10 max=10 value=0>
+                                <label for="highIncome">% of Households with Incomes Higher than $100,000 <span id="highIncomeVal"></span></label>
+                                <input id="highIncome" type='number' name="highIncome" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
 
                             <p>
-                                <label for="children">% of People Under 18<span id="childrenVal"></span><br></label>
-                                <input id="children" name="children" type="range" min=-10 max=10 value=0>
+                                <label for="children">% of People Under 18<span id="childrenVal"></span></label>
+                                <input id="children" type='number' name="children" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
 
                             <p>
-                                <label for="elderly">% of People Older than 65 <span id="elderlyVal"></span><br></label>
-                                <input id="elderly" name="elderly" type="range" min=-10 max=10 value=0>
+                                <label for="elderly">% of People Older than 65 <span id="elderlyVal"></span></label>
+                                <input id="elderly" type='number' name="elderly" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
 
                             <p>
-                                <label for="poverty">% of People in Poverty <span id="povertyVal"></span><br></label>
-                                <input id="poverty" name="poverty" type="range" min=-10 max=10 value=0>
+                                <label for="poverty">% of People in Poverty <span id="povertyVal"></span></label>
+                                <input id="poverty" type='number' name="poverty" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
 
                             <p>
-                                <label for="white">% of Population that is White<span id="whiteVal"></span><br></label>
-                                <input id="white" name="white" type="range" min=-10 max=10 value=0>
+                                <label for="white">% of Population that is White<span id="whiteVal"></span></label>
+                                <input id="white" type='number' name="white" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
 
                             <p>
-                                <label for="unemployed">% of People Unemployed<span id="unemployedVal"></span><br></label>
-                                <input id="unemployed" name="unemployed" type="range" min=-10 max=10 value=0>
-                            </p>
-
-
-
-                            <p>
-                                <label for="shortTrip">% of Workers with a Travel Time Less than 30 Minutes<span id="shortTripVal"></span><br></label>
-                                <input id="shortTrip" name="shortTrip" type="range" min=-10 max=10 value=0>
+                                <label for="unemployed">% of People Unemployed<span id="unemployedVal"></span></label>
+                                <input id="unemployed" type='number' name="unemployed" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
 
                             <p>
-                                <label for="vacancy">% of Units Vacant<span id="vacanyVal"></span><br></label>
-                                <input id="vacancy" name="vacancy" type="range" min=-10 max=10 value=0>
+                                <label for="shortTrip">% of Workers with a Travel Time Less than 30 Minutes<span id="shortTripVal"></span></label>
+                                <input id="shortTrip" type='number' name="shortTrip" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
+                            </p>
+
+                            <p>
+                                <label for="vacancy">% of Units Vacant<span id="vacanyVal"></span></label>
+                                <input id="vacancy" type='number' name="vacancy" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
                           </div>
                 </div>
@@ -174,7 +174,9 @@
               <div class="card-header" role="tab" id="headingTwo">
                 <h5 class="mb-0">
                   <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Filters
+                    <h4 style='text-align: center;'>
+                      Filters
+                    </h4>
                   </a>
                 </h5>
               </div>
@@ -185,35 +187,10 @@
               </div>
             </div>
           </div>
-        </div>
     <div class="col-xs-6 col-md-6">
-      <h3 style:"text-align: center; margin-top: 10px;"> <br> Top 10 Properties</h3>
+      <h3 style:"text-align: center; margin-top: 10px;"> <br> Top 25 Properties</h3>
       <ol id='property_list'>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+
       </ol>
     </div>
   </div>
@@ -288,6 +265,6 @@
 <!-- <script src="js/prelim_data_one.js"></script> -->
 <script src="js/data_norm.js"></script>
 <script src="js/scripts_index.js"></script>
-
+<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.js'></script>
 </body>
 </html>
