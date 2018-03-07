@@ -181,8 +181,30 @@
                 </h5>
               </div>
               <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <br>
                 <div class="card-block">
-                  Stay Tuned! Filters in progress...
+                  <form class="form">
+                    <label class="sr-only" for="farInput">FAR</label>
+                    <input type="number" class="form-control mb-2 mr-sm-2" id="farInput" placeholder="Minimum FAR">
+                    <div class="custom-control custom-radio">
+                      <input type="radio" id="top25" name="customRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="top25">Show Top 25 Properties</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input type="radio" id="top50" name="customRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="top50">Show Top 50 Properties</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input type="radio" id="top100" name="customRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="top100">Show Top 100 Properties</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input type="radio" id="allTop" name="customRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="allTop">Show All Properties</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Apply Filters</button>
+                    <button style='text-align: center' type="submit" class="btn btn-primary mb-2">Reset Filters</button>
+                  </form>
                 </div>
               </div>
             </div>

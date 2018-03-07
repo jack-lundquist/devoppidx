@@ -75,6 +75,7 @@ legend.addTo(map);
 
 
 function updateMap() {
+	scores = []; //define an array to store coordinates
   var idx = [$("#vacancy").val(), $("#shortTrip").val(), $("#highRent").val(), $("#renters").val(),
   $("#owners").val(), $("#recentMove").val(), $("#unemployed").val(), $("#white").val(),
   $("#poverty").val(), $("#elderly").val(), $("#children").val(), $("#highIncome").val(),
@@ -103,12 +104,7 @@ layer.feature.properties.pct_builtbefore1940_norm, layer.feature.properties.pct_
         layer.bindPopup("Address: " + layer.feature.properties.Address + "\n" + "BBL: " + layer.feature.properties.BBL
 			+ "\n" + "Index Score: " + layer.feature.properties.idx);
     };
-		console.log(features);
-		console.log(score);
-		console.log(getColor(score));
-		console.log(idx[1]);
-		console.log(layer.feature.properties.idx)
-		console.log(layer.feature.properties.pct_traveltime_15to30mins)
+
 		layer.setStyle({
 			fillColor: layer.feature.properties.color,
       weight: 0,
@@ -117,56 +113,16 @@ layer.feature.properties.pct_builtbefore1940_norm, layer.feature.properties.pct_
       // dashArray: '3',
       fillOpacity: 1
 		});
+		scores.push(layer.feature.properties.idx);
   });
 
-	var data = prop_layer;
+	var data = JSON.stringify(data_norm);
+	data.idx = scores;
+	console.log(data);
 	// var top25_1 = prop_layer.idx.sort(function(a, b) {
   //   return b - a;
 	// }).slice(0,25);
 	// console.log(top25);
-	var top25_2 = data.sort(function(a, b) { return a.feature.properties.idx < b.feature.properties.idx ? 1 : -1; }).slice(0, 25);
+	var top25_2 = data.sort(function(a, b) { return a.idx < b.idx ? 1 : -1; }).slice(0, 25);
 	console.log(top25_2);
 };
-
-
-// parseFloat(((parseFloat(idx[15])*parseFloat(layer.feature.properties.pct_builtafter2010_norm)) +
-// (parseFloat(idx[14])*parseFloat(layer.feature.properties.pct_builtbefore1940_norm)) +
-// (parseFloat(idx[13])*parseFloat(layer.feature.properties.pct_withcollegeplus_norm)) +
-// (parseFloat(idx[12])*parseFloat(layer.feature.properties.pct_withoutHS_norm)) +
-// (parseFloat(idx[11])*parseFloat(layer.feature.properties.pct_HHincomegreater100k_norm)) +
-// (parseFloat(idx[10])*parseFloat(layer.feature.properties.pct_children_norm)) +
-// (parseFloat(idx[9])*parseFloat(layer.feature.properties.pct_olderthan65_norm)) +
-// (parseFloat(idx[8])*parseFloat(layer.feature.properties.pct_inPoverty_norm)) +
-// (parseFloat(idx[7])*parseFloat(layer.feature.properties.pct_white_norm)) +
-// (parseFloat(idx[6])*parseFloat(layer.feature.properties.pct_unemployed_norm)) +
-// (parseFloat(idx[5])*parseFloat(layer.feature.properties.pct_movedin_2010pct_movedin_2010orlater_norm)) +
-// (parseFloat(idx[4])*parseFloat(layer.feature.properties.pct_ownership_norm)) +
-// (parseFloat(idx[3])*parseFloat(layer.feature.properties.pct_renters_norm)) +
-// (parseFloat(idx[2])*parseFloat(layer.feature.properties.pct_rent_2000pct_rent_2000plus_norm)) +
-// (parseFloat(idx[1])*parseFloat(layer.feature.properties.pct_traveltime_under30mins_norm)) +
-// (parseFloat(idx[0])*parseFloat(layer.feature.properties.pct_vacantunits_norm))));
-
-
-// var sliderRed = document.getElementById("red");
-// var outputRed = document.getElementById("redval");
-// outputRed.innerHTML = sliderRed.value;
-//
-// sliderRed.oninput = function() {
-//   outputRed.innerHTML = this.value;
-// }
-//
-// var sliderGreen = document.getElementById("green");
-// var outputGreen = document.getElementById("greenval");
-// outputGreen.innerHTML = sliderGreen.value;
-//
-// sliderGreen.oninput = function() {
-//   outputGreen.innerHTML = this.value;
-// }
-//
-// var sliderBlue = document.getElementById("blue");
-// var outputBlue = document.getElementById("blueval");
-// outputBlue.innerHTML = sliderBlue.value;
-//
-// sliderBlue.oninput = function() {
-//   outputBlue.innerHTML = this.value;
-// }
