@@ -3,7 +3,7 @@
 //     });
 
 //map variable
-var map = L.map('my-map', {scrollWheelZoom:false}).setView([40.692874,-73.939018], 11);
+var map = L.map('my-map', {scrollWheelZoom:false}).setView([40.692874,-73.939018], 10);
 
 //basemap
 L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
