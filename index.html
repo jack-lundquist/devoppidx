@@ -19,20 +19,23 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-light" style="background-color: rgba(109, 198, 149,
+  <nav id='headerNav' class="navbar navbar-light" style="background-color: rgba(109, 198, 149,
   1); color:#ffffff">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="index.html">The Affordable Housing Opportunity Index</a>
+    <a id='header' class="navbar-brand" href="index.html">The Affordable Housing Opportunity Index</a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#useModal">User Guide</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" data-toggle="modal" data-target="#dataModal">Data</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#aboutModal">About</a>
+        <a class="nav-link" data-toggle="modal" data-target="#creditsModal">Authors</a>
       </li>
     </ul>
     </div>
@@ -240,8 +243,62 @@
     </div>
   </div>
 </div>
+<div class="modal show" id="useModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">How to use this index</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <h4 id='box_top'>
+            Selecting Features
+          </h4>
+          <p>
+            Features in this iteration of the index are from census tract level
+            American Community Survey data. Features have been preprocessed through
+            a standard normalization procedure, resulting in a range of 0 to 1
+            for each feature. Depending on the stakeholder group you are a part of,
+            you may have different opinions about the significance of these features.
+             Some may matter very little to you, and some may matter a lot. The presence
+              of some of these features may be desirable to you, and some may not be. <br><br>
 
-<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            This tool has been designed to allow any stakeholder to determine the
+             weighting most appropriate for them! Changing the weighting is simple.
+             Features that are desirable should be weighted positively - the larger the
+             number (with a max of 10), the more significance attributed to it when calculating the score.
+             The converse is also true: features that are undesirable should be weighted negatively,
+              and larger negative numbers are weighted more heavily. A weighting of 0
+               excludes the feature from the index calculation.<br><br>
+            The formula to calculate the index score for each feature is simple:
+            the sum of each normalized value multiplied by the respective weightings you choose!
+          </p>
+          <h4>
+            Filters
+          </h4>
+          <h5>Floor Area Ratio Minimum</h5>
+          <p>Floor area ratio (FAR) is a measurement of density. The higher the FAR,
+            the more dense the allowed development. To select only buildings higher
+            than a certain FAR, input a minimum FAR!
+          </p>
+          <h5>Filter Number of Properties Displayed</h5>
+          <p>
+            If you only want to see the top 25/50/100 properties, select one of those options,
+             or select the option to view them all!
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="creditsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
