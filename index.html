@@ -8,20 +8,14 @@
   <meta name="description" content="Affordable Housing Opportunity Index">
   <meta name="author" content="Jack Lundquist">
 
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
   integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
   crossorigin=""/>
-
-
-  <link rel="stylesheet" href="css/styles_index.css" type="text/css">
-
   <link href='https://fonts.googleapis.com/css?family=Nunito:300' rel='stylesheet'>
-
-  <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-  <![endif]-->
+  <link rel="stylesheet" href="css/styles_index.css" type="text/css">
 </head>
 
 <body>
@@ -46,11 +40,6 @@
 <div id="body">
   <div class="row">
     <div class="col-xs-4 col-md-12">
-      <div id='my-map'></div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-md-6">
       <div id="accordion" role="tablist" aria-multiselectable="true" style='text-align: center;'>
         <div class="card">
           <div class="card-header" role="tab" id="headingOne">
@@ -75,7 +64,7 @@
                 </div>
                 <h5 style='text-align: center'><br><br>Neighborhood Building Stock<br></h5>
                 <div id="featureSelector">
-                        <span id="newFeature"></span>
+                        <div class="sliders" style='display:inline-block'>
                             <p>
                               <label for="newHousing">% of Housing Built After 2010 <span id="newHousingVal"></span></label>
                               <input id="newHousing" type="number" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 name="newHousing" value=0 oninput='updateMap()'>
@@ -105,11 +94,12 @@
                                 <input id="highRent" type='number' name="highRent" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
                             </p>
                           </div>
+                        </div>
                 </div>
                 <h5 style='text-align: center'>Community Characteristics</h5>
                 <div id="featureSelector">
                         <span id="newFeature"></span>
-                        <div class="sliders">
+                        <div class="sliders" style='display:inline-block'>
                             <p>
                                 <label for="collegePlus">% of People with College, Master's, or Doctorate Degree <span id="collegePlusVal"></span></label>
                                 <input id="collegePlus" type='number' name="collegePlus" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
@@ -162,14 +152,10 @@
                             </p>
                           </div>
                 </div>
-
-                            <div>
-                            <button id="updateBox">Update Map!</button>
-                            </div>
-                        </div>
-                    </div>
               </div>
             </div>
+          </div>
+            <!-- </div> -->
             <div class="card">
               <div class="card-header" role="tab" id="headingTwo">
                 <h5 class="mb-0">
@@ -185,34 +171,41 @@
                 <div class="card-block">
                   <form class="form">
                     <label class="sr-only" for="farInput">FAR</label>
-                    <input type="number" class="form-control mb-2 mr-sm-2" id="farInput" placeholder="Minimum FAR">
+                    <input type="number" class="form-control mb-2 mr-sm-2" id="farInput" placeholder="Choose a Minimum Floor Area Ratio (FAR)">
                     <div class="custom-control custom-radio">
-                      <input type="radio" id="top25" name="customRadio" class="custom-control-input">
+                      <input type="radio" id="top25" name="customRadio" value='25' class="custom-control-input">
                       <label class="custom-control-label" for="top25">Show Top 25 Properties</label>
                     </div>
                     <div class="custom-control custom-radio">
-                      <input type="radio" id="top50" name="customRadio" class="custom-control-input">
+                      <input type="radio" id="top50" name="customRadio" value='50' class="custom-control-input">
                       <label class="custom-control-label" for="top50">Show Top 50 Properties</label>
                     </div>
                     <div class="custom-control custom-radio">
-                      <input type="radio" id="top100" name="customRadio" class="custom-control-input">
+                      <input type="radio" id="top100" name="customRadio" value='100' class="custom-control-input">
                       <label class="custom-control-label" for="top100">Show Top 100 Properties</label>
                     </div>
                     <div class="custom-control custom-radio">
-                      <input type="radio" id="allTop" name="customRadio" class="custom-control-input">
+                      <input type="radio" id="allTop" name="customRadio" class="custom-control-input" value='all' checked>
                       <label class="custom-control-label" for="allTop">Show All Properties</label>
                     </div>
-                    <button type="submit" class="btn btn-primary mb-2">Apply Filters</button>
-                    <button style='text-align: center' type="submit" class="btn btn-primary mb-2">Reset Filters</button>
+                    <button type="submit" class="btn btn-primary mb-2" onclick="applyFilters()">Apply Filters</button>
+                    <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick='resetFilters()'>Reset Filters</button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
-    <div class="col-xs-6 col-md-6">
+      <div id='my-map'>
+        <!-- <div class="col-xs-6 col-md-6"> -->
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-4 col-md-12">
       <h3 style:"text-align: center; margin-top: 10px;"> <br> Top 25 Properties</h3>
       <ol id='property_list'>
-
       </ol>
     </div>
   </div>

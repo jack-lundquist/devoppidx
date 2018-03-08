@@ -12,17 +12,17 @@ h3{
   float:center;
   width:100%;
   overflow-y: auto;
-  height: 450px;
+  height: 500px;
 }
 
 
 #my-map{
   margin-top: 0;
   margin-left: 0;
-  /* float: left; */
-  /* width: 100%; */
+  float: right;
+  width: 75%;
   height: 500px;
-  padding: 0;
+  padding: 5px;
 }
 
 * {
@@ -40,56 +40,28 @@ h3{
 }
 
 .legend {
-    line-height: 18px;
-    color: #555;
+    color: white;
+    background-color: grey;
+    opacity: .85;
+    padding:10px;
+    width: 150px;
 }
 .legend i {
     width: 18px;
-    height: 18px;
-    float: left;
     margin-right: 8px;
-    opacity: 0.7;
+    float: right;
 }
 
-/* .datasets{
-  text-align: center;
-  background-color: rgba(144,144,144,.7);
+#accordion {
   position: absolute;
-  top: 50%;
-  right: 50%;
-  left: 50%;
-  bottom: 50%;
-  width: 400px;
-  height: 300px;
-  margin-top: -150px;
-  margin-left: -200px;
+  z-index: 1000;
+  /* top: 11px; */
+  /* left: 56px; */
+  background: black;
+  padding: 5px;
+  /* border-radius: 7px; */
+  width: 25%;
+  float: left;
+  height: 500px;
+  overflow-y: auto;
 }
-
-a{
-  text-decoration: none;
-}
-
-.data_list{
-  color: white;
-  font-size: 20px;
-  text-align: center;
-  display: inline-block;
-  padding: 20px;
-  margin-bottom: 10px;
-}
-
-.data_list a:link, a:visited {
-    color: white;
-    text-decoration: none;
-    display: inline-block;
-}
-
-a.data_list:hover{
-    text-decoration: underline;
-}
-
-.subhead{
-  color: white;
-  font-size: 30px;
-  text-align: center;
-} */

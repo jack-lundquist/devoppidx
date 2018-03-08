@@ -58,14 +58,15 @@ var legend = L.control({position: 'bottomright'});
 legend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
-        grades = [-15, -10, -5, 0, 5, 10, 15],
-        labels = [];
+        grades = [16, 14, 9, 4, -4, -9, -14, -16],
+        labels = ['Greater than 15', '10 to 15', '5 to 10', '0 to 5', "-5 to 0",
+				 "-10 to -5", '-15 to -10', 'Less than -15'];
+		div.innerHTML = '<div><b>Legend</b></div>';
 
     // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+		for(var i=0; i <grades.length; i++){
+                    div.innerHTML+='<i style="background:'+getColor(grades[i])+'">&nbsp;</i>&nbsp;&nbsp;'
+                    +labels[i]+'<br/>';
     }
 
     return div;
@@ -125,4 +126,14 @@ layer.feature.properties.pct_builtbefore1940_norm, layer.feature.properties.pct_
 	// console.log(top25);
 	var top25_2 = data.sort(function(a, b) { return a.idx < b.idx ? 1 : -1; }).slice(0, 25);
 	console.log(top25_2);
+};
+
+function resetFilters() {
+	updateMap();
+	$( "#top25" ).prop( "checked", false );
+	$( "#top50" ).prop( "checked", false );
+	$( "#top100" ).prop( "checked", false );
+	$( "#allTop" ).prop( "checked", true );
+	$('input[name=farInput').val('');
+	$('input[name=farInput').placeholder("Choose a Minimum Floor Area Ratio (FAR)");
 };
