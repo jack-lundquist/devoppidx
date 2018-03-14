@@ -1,3 +1,7 @@
+//Load intro modal on load
+$('#useModal').modal('show');
+
+
 //Initialize tooltips
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
@@ -115,7 +119,6 @@ legend.onAdd = function(map) {
 
 legend.addTo(map);
 
-$('#useModal').modal('show');
 
 
 //Update map function - called whenever the sub-index weightings are changed
