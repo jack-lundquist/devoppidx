@@ -19,193 +19,259 @@
 </head>
 
 <body>
-
+<!-- HEADER -->
   <nav id='headerNav' class="navbar navbar-light" style="background-color: rgba(75, 175, 119,
   .85); color:#ffffff">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <h3><a style='font-size: 30px' id='header' class="navbar-brand" data-toggle="modal" href="#useModal">The Affordable Housing Opportunity Index</a></h3>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#useModal">User Guide</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#dataModal">Data</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#creditsModal">Authors</a>
-      </li>
-    </ul>
+<!-- MODALS - INFO BOXES -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#useModal">User Guide</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#dataModal">Data</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#creditsModal">Authors</a>
+        </li>
+      </ul>
     </div>
   </nav>
+<!-- BODY -->
 <div id="body">
+<!-- FIRST ROW: ~1/3 Feature Selection, 2/3 Map -->
   <div class="row">
-    <div class="col-xs-4 col-md-12">
-      <div id="accordion" role="tablist" aria-multiselectable="true" style='text-align: center;'>
-        <div class="card">
-          <div class="card-header" role="tab" id="headingOne">
-            <h5 class="mb-0">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                <h4 style='text-align: center;'>
-                  Select Features
-                </h4>
-              </a>
-            </h5>
-          </div>
-
-          <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-            <div class="card-block">
-              <div class = 'slider_col'>
-                <h4 id='slider_header'>
-                <br>Use the sliders to customize feature importance
-                </h4>
-                <div id='slider_description'>
-                (10 is most important and positive, -10 is most important and negative, and 0 removes the feature from the index)
-                <br>
+    <div class="col-md-4">
+      <ul id='tabs' class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#presets" role="tab">Choose from Preset Weightings!</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#featureSelection" role="tab">Custom Feature Selection</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#filters" role="tab"><br>Apply <br>Filters</a>
+        </li>
+      </ul>
+      <!-- CONTENT FOR TABS -->
+      <div class="tab-content">
+        <div class="tab-pane fade in show active" id="presets" role="tabpanel">
+          <br><br>
+          <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick="devFilter()">Developer Preset</button><br>
+          <br><button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick="commFilter()">Community Preset</button><br>
+          <br><button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick="govFilter()">Government Preset</button>
+        </div>
+        <div class="tab-pane fade" id="featureSelection" role="tabpanel">
+          <h5 id='slider_header' data-toggle="tooltip" data-placement="top"
+          title="(10 is most important and positive, -10 is most important and negative, and 0 removes the feature from the AHOI)">
+          <br>Use the sliders to customize feature importance (hover for more info)
+        </h5>
+          <h6 style='text-align: center; font-weight: bold'><br>Neighborhood Building Stock<br></h6>
+          <div id="featureSelector">
+            <div class="sliders" style='display:inline-block'>
+              <div class = 'row'>
+                <div class="col-xs-6 col-md-9">
+                  <label for="newHousing">% of Housing Built After 2010 <span id="newHousingVal"></span></label>
                 </div>
-                <h5 style='text-align: center'><br><br>Neighborhood Building Stock<br></h5>
-                <div id="featureSelector">
-                        <div class="sliders" style='display:inline-block'>
-                            <p>
-                              <label for="newHousing">% of Housing Built After 2010 <span id="newHousingVal"></span></label>
-                              <input id="newHousing" type="number" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 name="newHousing" value=0 oninput='updateMap()'>
-                            </p>
-                            <p>
-                                <label for="oldHousing">% of Housing Built Before 1940 <span id="oldHousingVal"></span></label>
-                                <input id="oldHousing" type='number' class="form-control bfh-number" name="oldHousing" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-
-                            <p>
-                                <label for="recentMove">% of Households that Moved in After 2010<span id="recentMoveVal"></span></label>
-                                <input id="recentMove" type='number' name="recentMove" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-
-                            <p>
-                                <label for="owners">% of Owner-Occupied Units <span id="ownersVal"></span></label>
-                                <input id="owners" type='number' name="owners" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-
-                            <p>
-                                <label for="renters">% of Renter-Occupied Units<span id="rentersVal"></span></label>
-                                <input id="renters" type='number' name="renters" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-
-                            <p>
-                                <label for="highRent">% of Households with Rent Greater than $2000/month<span id="highRentVal"></span></label>
-                                <input id="highRent" type='number' name="highRent" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-                          </div>
-                        </div>
+                <div class="col-xs-6 col-md-3">
+                  <input id="newHousing" type="number" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 name="newHousing" value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                 </div>
-                <h5 style='text-align: center'>Community Characteristics</h5>
-                <div id="featureSelector">
-                        <span id="newFeature"></span>
-                        <div class="sliders" style='display:inline-block'>
-                            <p>
-                                <label for="collegePlus">% of People with College, Master's, or Doctorate Degree <span id="collegePlusVal"></span></label>
-                                <input id="collegePlus" type='number' name="collegePlus" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
+              </div>
+                <div class = 'row'>
+                  <div class="col-xs-6 col-md-9">
+                    <label for="oldHousing">% of Housing Built Before 1940 <span id="oldHousingVal"></span></label>
+                  </div>
+                  <div class="col-xs-6 col-md-3">
+                    <input id="oldHousing" type='number' class="form-control bfh-number" name="oldHousing" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                  </div>
+                </div>
+                <div class = 'row'>
+                  <div class="col-xs-6 col-md-9">
+                    <label for="recentMove">% of Households that Moved in After 2010<span id="recentMoveVal"></span></label>
+                  </div>
+                  <div class="col-xs-6 col-md-3">
+                    <input id="recentMove" type='number' name="recentMove" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                  </div>
+                </div>
 
-                            </p>
+                <div class = 'row'>
+                  <div class="col-xs-6 col-md-9">
+                    <label for="owners">% of Owner-Occupied Units <span id="ownersVal"></span></label>
+                  </div>
+                  <div class="col-xs-6 col-md-3">
+                    <input id="owners" type='number' name="owners" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                  </div>
+                </div>
 
-                            <p>
-                                <label for="hsMinus">% of People with less than a High School Degree <span id="hsMinusVal"></span></label>
-                                <input id="hsMinus" type='number' name="hsMinus" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
+                <div class = 'row'>
+                  <div class="col-xs-6 col-md-9">
+                    <label for="renters">% of Renter-Occupied Units<span id="rentersVal"></span></label>
+                  </div>
+                  <div class="col-xs-6 col-md-3">
+                    <input id="renters" type='number' name="renters" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                  </div>
+                </div>
 
-                            <p>
-                                <label for="highIncome">% of Households with Incomes Higher than $100,000 <span id="highIncomeVal"></span></label>
-                                <input id="highIncome" type='number' name="highIncome" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-
-                            <p>
-                                <label for="children">% of People Under 18<span id="childrenVal"></span></label>
-                                <input id="children" type='number' name="children" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-
-                            <p>
-                                <label for="elderly">% of People Older than 65 <span id="elderlyVal"></span></label>
-                                <input id="elderly" type='number' name="elderly" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-
-                            <p>
-                                <label for="poverty">% of People in Poverty <span id="povertyVal"></span></label>
-                                <input id="poverty" type='number' name="poverty" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-
-                            <p>
-                                <label for="white">% of Population that is White<span id="whiteVal"></span></label>
-                                <input id="white" type='number' name="white" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-
-                            <p>
-                                <label for="unemployed">% of People Unemployed<span id="unemployedVal"></span></label>
-                                <input id="unemployed" type='number' name="unemployed" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-
-                            <p>
-                                <label for="shortTrip">% of Workers with a Travel Time Less than 30 Minutes<span id="shortTripVal"></span></label>
-                                <input id="shortTrip" type='number' name="shortTrip" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-
-                            <p>
-                                <label for="vacancy">% of Units Vacant<span id="vacanyVal"></span></label>
-                                <input id="vacancy" type='number' name="vacancy" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()'>
-                            </p>
-                          </div>
+                <div class = 'row'>
+                  <div class="col-xs-6 col-md-9">
+                    <label for="highRent">% of Households with Rent Greater than $2000/month<span id="highRentVal"></span></label>
+                  </div>
+                  <div class="col-xs-6 col-md-3">
+                    <input id="highRent" type='number' name="highRent" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-            <!-- </div> -->
-            <div class="card">
-              <div class="card-header" role="tab" id="headingTwo">
-                <h5 class="mb-0">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    <h4 style='text-align: center;'>
-                      Filters
-                    </h4>
-                  </a>
-                </h5>
-              </div>
-              <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <br>
-                <div class="card-block">
-                  <form class="form">
-                    <label class="sr-only" for="farInput">FAR</label>
-                    <input type="number" class="form-control mb-2 mr-sm-2" id="farInput" placeholder="Choose a Minimum Floor Area Ratio (FAR)">
-                    <div class="custom-control custom-radio">
-                      <input type="radio" id="top25" name="customRadio" value='25' class="custom-control-input">
-                      <label class="custom-control-label" for="top25">Show Top 25 Properties</label>
+            <h6 style='text-align: center; font-weight: bold;'>Community Characteristics</h6>
+            <div id="featureSelector">
+              <span id="newFeature"></span>
+              <div class="sliders" style='display:inline-block'>
+                  <div class = 'row'>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="collegePlus">% of People with College, Master's, or Doctorate Degree <span id="collegePlusVal"></span></label>
                     </div>
-                    <div class="custom-control custom-radio">
-                      <input type="radio" id="top50" name="customRadio" value='50' class="custom-control-input">
-                      <label class="custom-control-label" for="top50">Show Top 50 Properties</label>
+                    <div class="col-xs-6 col-md-3">
+                      <input id="collegePlus" type='number' name="collegePlus" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                     </div>
-                    <div class="custom-control custom-radio">
-                      <input type="radio" id="top100" name="customRadio" value='100' class="custom-control-input">
-                      <label class="custom-control-label" for="top100">Show Top 100 Properties</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                      <input type="radio" id="allTop" name="customRadio" class="custom-control-input" value='all' checked>
-                      <label class="custom-control-label" for="allTop">Show All Properties</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary mb-2" onclick="applyFilters()">Apply Filters</button>
-                    <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick='resetFilters()'>Reset Filters</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-      <div id='my-map'>
-        <!-- <div class="col-xs-6 col-md-6"> -->
+                  </div>
 
+                  <div class = 'row'>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="hsMinus">% of People with less than a High School Degree <span id="hsMinusVal"></span></label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                      <input id="hsMinus" type='number' name="hsMinus" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                    </div>
+                  </div>
+
+                  <div class = 'row'>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="highIncome">% of Households with Incomes Higher than $100,000 <span id="highIncomeVal"></span></label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                      <input id="highIncome" type='number' name="highIncome" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                    </div>
+                  </div>
+
+                  <div class = 'row'>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="children">% of People Under 18<span id="childrenVal"></span></label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                      <input id="children" type='number' name="children" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                    </div>
+                  </div>
+
+                  <div class = 'row'>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="elderly">% of People Older than 65 <span id="elderlyVal"></span></label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                      <input id="elderly" type='number' name="elderly" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                    </div>
+                  </div>
+
+                  <div class = 'row'>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="poverty">% of People in Poverty <span id="povertyVal"></span></label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                      <input id="poverty" type='number' name="poverty" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                    </div>
+                  </div>
+
+                  <div class = 'row'>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="white">% of Population that is White<span id="whiteVal"></span></label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                      <input id="white" type='number' name="white" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                    </div>
+                  </div>
+
+                  <div class = 'row'>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="unemployed">% of People Unemployed<span id="unemployedVal"></span></label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                      <input id="unemployed" type='number' name="unemployed" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                    </div>
+                  </div>
+
+                  <div class = 'row'>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="shortTrip">% of Workers with a Travel Time Less than 30 Minutes<span id="shortTripVal"></span></label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                      <input id="shortTrip" type='number' name="shortTrip" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                    </div>
+                  </div>
+
+                  <div class = 'row'>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="vacancy">% of Units Vacant<span id="vacanyVal"></span></label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                      <input id="vacancy" type='number' name="vacancy" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="filters" role="tabpanel">
+          <form class="form">
+            <div class='row'>
+            <div class="col-xs-6 col-md-6">
+            <label for="farMin" data-toggle="tooltip" data-placement="top" title="FAR is a measurement of density. It is the ratio of gross floor area to area of the property is built in. Higher FARs allow for denser development."><br>Choose Minimum Floor Area Ratio (FAR):</label>
+          </div>
+          <div class="col-xs-6 col-md-6">
+            <br>
+            <select class="form-control" id="farMin">
+              <option>0 (No Minimum)</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+            </select>
+          </div>
+        </div>
+            <div class='row'>
+            <div class="col-xs-6 col-md-6">
+            <label for="numProp"><br>Show Just the Top Scoring Properties</label>
+          </div>
+          <div class="col-xs-6 col-md-6">
+            <br>
+            <select class="form-control" id="numProp">
+              <option>Show all parcels</option>
+              <option>Show top 100</option>
+              <option>Show top 50</option>
+              <option>Show top 25</option>
+            </select>
+          </div>
+        </div>
+            <br>
+            <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick="applyFilters()">Apply Filters </button>
+            <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick='resetFilters()' disabled>Reset Filters</button>
+          </form>
+        </div>
       </div>
+    </div>
+    <div class="col-xs-4 col-md-8">
+      <div id='my-map'></div>
     </div>
   </div>
 
+<!-- SECOND ROW: LIST OF TOP 25 PROPERTIES -->
   <div class="row">
     <div class="col-xs-4 col-md-12">
       <h3 style:"text-align: center; margin-top: 10px;"> <br> Top 25 Properties</h3>
@@ -248,7 +314,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLongTitle">How to use this index</h3>
+        <h3 class="modal-title" id="exampleModalLongTitle">How to use the Affordable Housing Opportunity Index</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -259,7 +325,8 @@
             Selecting Features
           </h4>
           <p>
-            Features in this iteration of the index are from census tract level
+            Features in this iteration of the affordable housing opportunity index (AHOI)
+             are from census tract level
             American Community Survey data. Features have been preprocessed through
             a standard normalization procedure, resulting in a range of 0 to 1
             for each feature. Depending on the stakeholder group you are a part of,
@@ -267,14 +334,14 @@
              Some may matter very little to you, and some may matter a lot. The presence
               of some of these features may be desirable to you, and some may not be. <br><br>
 
-            This tool has been designed to allow any stakeholder to determine the
+            This tool and the AHOI has been designed to allow any stakeholder to determine the
              weighting most appropriate for them! Changing the weighting is simple.
              Features that are desirable should be weighted positively - the larger the
              number (with a max of 10), the more significance attributed to it when calculating the score.
              The converse is also true: features that are undesirable should be weighted negatively,
               and larger negative numbers are weighted more heavily. A weighting of 0
                excludes the feature from the index calculation.<br><br>
-            The formula to calculate the index score for each feature is simple:
+            The formula to calculate the AHOI score for each feature is simple:
             the sum of each normalized value multiplied by the respective weightings you choose!
           </p>
           <h4>
@@ -325,7 +392,6 @@
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
@@ -341,3 +407,48 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.js'></script>
 </body>
 </html>
+
+
+
+      <!-- <div class="card">
+        <div class="card-header" role="tab" id="headingTwo">
+          <h5 class="mb-0">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              <h3 style='text-align: center;'>
+                Filters
+              </h3>
+            </a>
+          </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <br>
+          <div class="card-block">
+            <form class="form">
+              <label for="farMin">Choose Minimum Floor Area Ratio (FAR):</label>
+              <select class="form-control" id="farMin">
+                <option>0 (No Minimum)</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+              </select>
+              <label for="numProp"><br><br>Show Just the Top-Scoring Properties</label>
+              <select class="form-control" id="numProp">
+                <option>Show all the properties</option>
+                <option>Show the top 100 properties</option>
+                <option>Show the top 50 properties</option>
+                <option>Show the top 25 properties</option>
+              </select>
+              <button type="submit" class="btn btn-primary mb-2" onclick="applyFilters()">Apply Filters</button>
+              <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick='resetFilters()'>Reset Filters</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div> -->
