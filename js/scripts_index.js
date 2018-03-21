@@ -179,3 +179,63 @@ function resetFilters() {
   $("#numProp1").val("all");
   $("#farMin1").val('0');
 };
+
+function devFilter() {
+  $("#vacancy").val() = -5;
+  $("#shortTrip").val() = 2;
+  $("#highRent").val() = 5;
+  $("#renters").val() = 0;
+  $("#owners").val() = 5;
+  $("#recentMove").val() = 7;
+  $("#unemployed").val() = -7;
+  $("#white").val() = 5;
+  $("#poverty").val() = -7;
+  $("#elderly").val() = 0;
+  $("#children").val() = 0;
+  $("#highIncome").val() = 7;
+  $("#hsMinus").val() = -5;
+  $("#collegePlus").val() = 7;
+  $("#oldHousing").val() = 0;
+  $("#newHousing").val() = 7;
+  updateMap();
+};
+
+function commFilter() {
+  $("#vacancy").val() = 5;
+  $("#shortTrip").val() = 7;
+  $("#highRent").val() = -5;
+  $("#renters").val() = 0;
+  $("#owners").val() = 0;
+  $("#recentMove").val() = 0;
+  $("#unemployed").val() = 5;
+  $("#white").val() = -5;
+  $("#poverty").val() = 5;
+  $("#elderly").val() = 5;
+  $("#children").val() = 5;
+  $("#highIncome").val() = 3;
+  $("#hsMinus").val() = 5;
+  $("#collegePlus").val() = 3;
+  $("#oldHousing").val() = 3;
+  $("#newHousing").val() = 3;
+  updateMap();
+};
+
+function govFilter() {
+  $("#vacancy").val() = 7;
+  $("#shortTrip").val() = 3;
+  $("#highRent").val() = 0;
+  $("#renters").val() = 5;
+  $("#owners").val() = 0;
+  $("#recentMove").val() = 0;
+  $("#unemployed").val() = 7;
+  $("#white").val() = 0;
+  $("#poverty").val() = 5;
+  $("#elderly").val() = 5;
+  $("#children").val() = 5;
+  $("#highIncome").val() = 0;
+  $("#hsMinus").val() = 5;
+  $("#collegePlus").val() = 0;
+  $("#oldHousing").val() = 0;
+  $("#newHousing").val() = 0;
+  updateMap();
+};
