@@ -124,8 +124,8 @@ function updateMap() {
       onEachFeature: onEachFeature,
   });
   var features = data_norm.features;
-  // var prop_layer = features.filter(a=>a.ResidFAR>parseInt($('#farMin').find(":selected").value);
-  // console.log(prop_layer);
+  var prop_layer = features.filter(a=>a.ResidFAR>(parseInt($('#farMin1').find(":selected").text().charAt(0))));
+  console.log(prop_layer);
   var prop_layer_100 = getTopN(features, 'idx', 100);
   var prop_layer_50 = getTopN(features, 'idx', 50);
   var prop_layer_25 = getTopN(features, 'idx', 25);
@@ -141,7 +141,7 @@ function updateMap() {
   else {prop_layer.addTo(map);
   };
   console.log(prop_layer_100);
-  console.log($('#farMin1').find(":selected").value);
+  console.log(parseInt($('#farMin1').find(":selected").text().charAt(0)));
   console.log(val);
   document.getElementById('property_list').appendChild(makeUL(JSONparse(prop_layer_25).features));
 };
