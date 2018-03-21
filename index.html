@@ -21,7 +21,7 @@
 <body>
 <!-- HEADER -->
   <nav id='headerNav' class="navbar navbar-light" style="background-color: rgba(75, 175, 119,
-  .85); color:#ffffff">
+  .85); color:"#ffffff">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -230,38 +230,38 @@
           </div>
           <div class="col-xs-6 col-md-6">
             <br>
-            <select class="form-control" id="farMin">
-              <option>0 (No Minimum)</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              <option>9</option>
-              <option>10</option>
+            <select class="form-control" id="farMin1">
+              <option selected='selected' value='0'>0 (No Minimum)</option>
+              <option value='1'>1</option>
+              <option value='2'>2</option>
+              <option value='3'>3</option>
+              <option value='4'>4</option>
+              <option value='5'>5</option>
+              <option value='6'>6</option>
+              <option value='7'>7</option>
+              <option value='8'>8</option>
+              <option value='9'>9</option>
+              <option value='10'>10</option>
             </select>
           </div>
         </div>
-            <div class='row'>
+        <div class='row'>
             <div class="col-xs-6 col-md-6">
             <label for="numProp"><br>Show Just the Top Scoring Properties</label>
-          </div>
+            </div>
           <div class="col-xs-6 col-md-6">
             <br>
-            <select class="form-control" id="numProp">
-              <option>Show all parcels</option>
-              <option>Show top 100</option>
-              <option>Show top 50</option>
-              <option>Show top 25</option>
+            <select class="form-control" id="numProp1">
+              <option value='all'>Show all parcels</option>
+              <option value='100'>Show Top 100</option>
+              <option value'50'>Show Top 50</option>
+              <option value='25'>Show Top 25</option>
             </select>
           </div>
         </div>
             <br>
-            <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick="applyFilters()">Apply Filters </button>
-            <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick='resetFilters()' disabled>Reset Filters</button>
+            <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick="updateMap()">Apply Filters </button>
+            <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick='resetFilters()'>Reset Filters</button>
           </form>
         </div>
       </div>
@@ -275,8 +275,8 @@
   <div class="row">
     <div class="col-xs-4 col-md-12">
       <h3 style:"text-align: center; margin-top: 10px;"> <br> Top 25 Properties</h3>
-      <ol id='property_list'>
-      </ol>
+      <div id='property_list'>
+      </div>
     </div>
   </div>
 </div>
@@ -402,48 +402,3 @@
 <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.js'></script> -->
 </body>
 </html>
-
-
-
-      <!-- <div class="card">
-        <div class="card-header" role="tab" id="headingTwo">
-          <h5 class="mb-0">
-            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              <h3 style='text-align: center;'>
-                Filters
-              </h3>
-            </a>
-          </h5>
-        </div>
-        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <br>
-          <div class="card-block">
-            <form class="form">
-              <label for="farMin">Choose Minimum Floor Area Ratio (FAR):</label>
-              <select class="form-control" id="farMin">
-                <option>0 (No Minimum)</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-              </select>
-              <label for="numProp"><br><br>Show Just the Top-Scoring Properties</label>
-              <select class="form-control" id="numProp">
-                <option>Show all the properties</option>
-                <option>Show the top 100 properties</option>
-                <option>Show the top 50 properties</option>
-                <option>Show the top 25 properties</option>
-              </select>
-              <button type="submit" class="btn btn-primary mb-2" onclick="applyFilters()">Apply Filters</button>
-              <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick='resetFilters()'>Reset Filters</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div> -->

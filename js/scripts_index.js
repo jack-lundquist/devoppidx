@@ -29,7 +29,7 @@ function getColor(d) {
         d > -10 ? '#E87203' :
         d > -15 ? '#EA3E03' :
         '#EC0803';
-}
+};
 
 
 //Initializaing function for each feature in the geojson
@@ -42,21 +42,19 @@ function onEachFeature(feature, layer) {
     ];
     for (var i = 0; i < idx.length; i++) {
         if (idx[i] > 10) {
+            alert('Please choose values <= 10! Value changed to 10 in index calculation.');
             idx[i] == 10;
-            alert('Please choose values <= 10! Value changed to 10 in index calculation.')
         };
         if (idx[i] < -10) {
+            alert('Please choose values => -10! Value changed to -10 in index calculation.');
             idx[i] == -10;
-            alert('Please choose values => -10! Value changed to -10 in index calculation.')
         }
-    }
-
-
+    };
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.Address) {
         layer.bindPopup("Address: " + feature.properties.Address + "\n" + "BBL: " + feature.properties.BBL);
     }
-    feature.properties.idx = 0
+    feature.properties.idx = 0;
     features = [layer.feature.properties.pct_vacantunits_norm, layer.feature.properties.pct_traveltime_under30mins_norm,
         layer.feature.properties.pct_rent_2000plus_norm, layer.feature.properties.pct_renters_norm,
         layer.feature.properties.pct_ownership_norm, layer.feature.properties.pct_movedin_2010orlater_norm,
@@ -69,14 +67,13 @@ function onEachFeature(feature, layer) {
     var score = 0;
     for (var i = 0; i < idx.length; i++) {
         score += idx[i] * features[i];
-    }
+    };
     layer.feature.properties.idx = score;
     layer.feature.properties.color = getColor(score);
     if (layer.feature.properties && layer.feature.properties.Address) {
         layer.bindPopup("Address: " + layer.feature.properties.Address + "\n" + "BBL: " + layer.feature.properties.BBL +
             "\n" + "Index Score: " + layer.feature.properties.idx);
     };
-
     layer.setStyle({
         fillColor: layer.feature.properties.color,
         weight: 0,
@@ -85,14 +82,72 @@ function onEachFeature(feature, layer) {
         // dashArray: '3',
         fillOpacity: 1
     });
-}
+};
 
-//Create geojson layer and add it to map
-var prop_layer = L.geoJSON(data_norm, {
-    onEachFeature: onEachFeature,
-});
 
-prop_layer.addTo(map);
+//Function to get Top N values
+function getTopN(arr, prop, n) {
+    var clone = arr.slice(0);
+    // sort descending
+    clone.sort(function(x, y) {
+        if (x[prop] == y[prop]) return 0;
+        else if (parseInt(x[prop]) < parseInt(y[prop])) return 1;
+        else return -1;
+    });
+    return clone.slice(0, n);
+};
+//
+//
+// function makeUL(array) {
+//     // Create the list element:
+//     var list = document.createElement('ul');
+//
+//     for(var i = 0; i < array.length; i++) {
+//         // Create the list item:
+//         var item = document.createElement('li');
+//
+//         // Set its contents:
+//         item.appendChild(document.createTextNode(array[i]));
+//
+//         // Add it to the list:
+//         list.appendChild(item);
+//     }
+//
+//     // Finally, return the constructed list:
+//     return list;
+// }
+
+//Update Map Function - called whenever values change or the apply filter button is pushed
+function updateMap() {
+  var val = $('#numProp1').find(":selected").text();
+  var prop_layer = L.geoJSON(data_norm, {
+      onEachFeature: onEachFeature,
+  });
+  var features = data_norm.features;
+  // var prop_layer = features.filter(a=>a.ResidFAR>parseInt($('#farMin').find(":selected").value);
+  // console.log(prop_layer);
+  var prop_layer_100 = getTopN(features, 'idx', 100);
+  var prop_layer_50 = getTopN(features, 'idx', 50);
+  var prop_layer_25 = getTopN(features, 'idx', 25);
+  if(val == "Show Top 100") {
+    prop_layer_100.addTo(map);
+  }
+  else if (val == "Show Top 50") {
+    prop_layer_50.addTo(map);
+  }
+  else if (val == "Show Top 25") {
+    prop_layer_25.addTo(map);
+  }
+  else {prop_layer.addTo(map);
+  };
+  console.log(prop_layer_100);
+  console.log($('#farMin1').find(":selected").value);
+  console.log(val);
+  document.getElementById('property_list').appendChild(makeUL(JSONparse(prop_layer_25).features));
+};
+
+updateMap();
+
 
 //Create legend
 var legend = L.control({
@@ -119,99 +174,8 @@ legend.onAdd = function(map) {
 
 legend.addTo(map);
 
-
-
-//Update map function - called whenever the sub-index weightings are changed
-function updateMap() {
-    scores = []; //define an array to store coordinates
-    var idx = [$("#vacancy").val(), $("#shortTrip").val(), $("#highRent").val(), $("#renters").val(),
-        $("#owners").val(), $("#recentMove").val(), $("#unemployed").val(), $("#white").val(),
-        $("#poverty").val(), $("#elderly").val(), $("#children").val(), $("#highIncome").val(),
-        $("#hsMinus").val(), $("#collegePlus").val(), $("#oldHousing").val(), $("#newHousing").val()
-    ];
-    for (var i = 0; i < idx.length; i++) {
-        if (idx[i] > 10) {
-            idx[i] == 10;
-            alert('Please choose values <= 10! Value changed to 10 in index calculation.')
-        };
-        if (idx[i] < -10) {
-            idx[i] == -10;
-            alert('Please choose values => -10! Value changed to -10 in index calculation.')
-        }
-        //Do something
-    }
-    prop_layer.eachLayer(function(layer, feature) {
-        features = [layer.feature.properties.pct_vacantunits_norm, layer.feature.properties.pct_traveltime_under30mins_norm,
-            layer.feature.properties.pct_rent_2000plus_norm, layer.feature.properties.pct_renters_norm,
-            layer.feature.properties.pct_ownership_norm, layer.feature.properties.pct_movedin_2010orlater_norm,
-            layer.feature.properties.pct_unemployed_norm, layer.feature.properties.pct_white_norm,
-            layer.feature.properties.pct_inPoverty_norm, layer.feature.properties.pct_olderthan65_norm,
-            (1 - layer.feature.properties.pct_olderthan18_norm), layer.feature.properties.pct_HHincomegreater100k_norm,
-            layer.feature.properties.pct_withoutHS_norm, layer.feature.properties.pct_withcollegeplus_norm,
-            layer.feature.properties.pct_builtbefore1940_norm, layer.feature.properties.pct_builtafter2010_norm
-        ];
-        var score = 0;
-        for (var i = 0; i < idx.length; i++) {
-            score += idx[i] * features[i];
-        }
-        layer.feature.properties.idx = score;
-        layer.feature.properties.color = getColor(score);
-        if (layer.feature.properties && layer.feature.properties.Address) {
-            layer.bindPopup("Address: " + layer.feature.properties.Address + "\n" + "BBL: " + layer.feature.properties.BBL +
-                "\n" + "Index Score: " + layer.feature.properties.idx);
-        };
-
-        layer.setStyle({
-            fillColor: layer.feature.properties.color,
-            weight: 0,
-            opacity: 0,
-            color: "lightgrey",
-            // dashArray: '3',
-            fillOpacity: 1
-        });
-        scores.push(layer.feature.properties.idx);
-    });
-    var scores_addresses = prop_layer.features.map(function(feature) {
-        return [feature.properties.idx, feature.properties.Address];
-    });
-    console.log(scores_addresses);
-    // var top25_1 = prop_layer.idx.sort(function(a, b) {
-    //   return b - a;
-    // }).slice(0,25);
-    // console.log(top25);
-    var top25_2 = data_norm.sort(function(a, b) {
-        return a.idx < b.idx ? 1 : -1;
-    }).slice(0, 25);
-    console.log(top25_2);
-};
-
 //When reset filter button is pushed - clears all filters + resets filter buttons
 function resetFilters() {
-    updateMap();
-    $("#top25").prop("checked", false);
-    $("#top50").prop("checked", false);
-    $("#top100").prop("checked", false);
-    $("#allTop").prop("checked", true);
-		// HAVE RESET FILTER BE DISABLED AGAIN
-    $('input[name=farInput').val('');
-    $('input[name=farInput').placeholder("Choose a Minimum Floor Area Ratio (FAR)");
-		alert("Filters Removed!")
+  $("#numProp1").val("all");
+  $("#farMin1").val('0');
 };
-
-//When Apply Filter button is pushed - checks which filters are turned on and applies them to the map
-function applyFilters() {
-		// enable filter!
-    if ($('#top25').checked) {
-        var propCount = 25;
-    } else if ($('#top50').checked) {
-        var propCount = 50;
-    } else if ($('#top100').checked) {
-        var propCount = 100;
-    } else {
-        updateMap();
-    };
-    if (propCount > 100) {
-        updateMap();
-    }
-		alert('Filtering Applied!')
-}
