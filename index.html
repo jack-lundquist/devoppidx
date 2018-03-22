@@ -1,7 +1,6 @@
 <!doctype html>
 
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
 
@@ -12,242 +11,216 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+  integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+  crossorigin=""/>
   <link href='https://fonts.googleapis.com/css?family=Nunito:300' rel='stylesheet'>
   <link rel="stylesheet" href="css/styles_index.css" type="text/css">
 </head>
 
 <body>
-  <!-- HEADER -->
+<!-- HEADER -->
   <nav id='headerNav' class="navbar navbar-light" style="background-color: rgba(75, 175, 119,
-  1); color:" #ffffff ">
-    <button class="navbar-toggler navbar-toggler-right " type="button " data-toggle="collapse " data-target="#navbarSupportedContent " aria-controls="navbarSupportedContent " aria-expanded="false " aria-label="Toggle navigation ">
-      <span class="navbar-toggler-icon "></span>
+  1); color:"#ffffff">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
-    <h3><a style='font-size: 30px' id='header' class="navbar-brand " data-toggle="modal " href="#useModal ">The Affordable Housing Opportunity Index</a></h3>
+    <h3><a style='font-size: 30px' id='header' class="navbar-brand" data-toggle="modal" href="#useModal">The Affordable Housing Opportunity Index</a></h3>
 <!-- MODALS - INFO BOXES -->
-    <div class="collapse navbar-collapse " id="navbarSupportedContent ">
-      <ul class="navbar-nav mr-auto ">
-        <li class="nav-item ">
-          <a class="nav-link " data-toggle="modal " data-target="#useModal ">User Guide</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#useModal">User Guide</a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link " data-toggle="modal " data-target="#dataModal ">Data</a>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#dataModal">Data</a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link " data-toggle="modal " data-target="#creditsModal ">Authors</a>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#creditsModal">Authors</a>
         </li>
       </ul>
     </div>
   </nav>
 <!-- BODY -->
-<div id="body ">
+<div id="body">
 <!-- FIRST ROW: ~1/3 Feature Selection, 2/3 Map -->
-  <div class="row " style='background-color: #fafaf8'>
-    <div class="col-md-4 ">
-      <ul id='tabs' class="nav nav-tabs nav-justified ">
-        <li style='vertical-align: middle; min-height: 70px' class="nav-item ">
-            <a style='vertical-align: middle; min-height: 70px' class="nav-link active " data-toggle="tab " href="#presets " role="tab ">Choose from Preset Weightings</a>
+  <div class="row" style='background-color: #fafaf8'>
+    <div class="col-md-4">
+      <ul id='tabs' class="nav nav-tabs nav-justified">
+        <li style='vertical-align: middle; min-height: 70px' class="nav-item">
+            <a style='vertical-align: middle; min-height: 70px' class="nav-link active" data-toggle="tab" href="#presets" role="tab">Choose from Preset Weightings</a>
         </li>
-        <li style='vertical-align: middle; min-height: 70px' class="nav-item ">
-            <a style='vertical-align: middle; min-height: 70px' class="nav-link " data-toggle="tab " href="#featureSelection " role="tab ">Custom Feature Selection</a>
+        <li style='vertical-align: middle; min-height: 70px' class="nav-item">
+            <a style='vertical-align: middle; min-height: 70px' class="nav-link" data-toggle="tab" href="#featureSelection" role="tab">Custom Feature Selection</a>
         </li>
-        <li style='vertical-align: middle; min-height: 70px' class="nav-item ">
-            <a style='vertical-align: middle; min-height: 70px' class="nav-link " data-toggle="tab " href="#filters " role="tab "><br>Apply Filters<br><br></a>
+        <li style='vertical-align: middle; min-height: 70px' class="nav-item">
+            <a style='vertical-align: middle; min-height: 70px' class="nav-link" data-toggle="tab" href="#filters" role="tab"><br>Apply Filters<br><br></a>
         </li>
       </ul>
       <!-- CONTENT FOR TABS -->
-      <div class="tab-content ">
-        <div class="tab-pane fade in show active " id="presets " role="tabpanel ">
+      <div class="tab-content">
+        <div class="tab-pane fade in show active" id="presets" role="tabpanel">
           <br><br>
           <div style='display: block; margin: auto; width: 50% !important'>
-            <button style='text-align: center; min-width:170px;' type="submit " class="btn btn-primary mb-2 " onclick="devFilter() ">Developer Preset</button><br>
-            <br><button style='text-align: center;min-width:170px;' type="submit " class="btn btn-primary mb-2 " onclick="commFilter() ">Community Preset</button><br>
-            <br><button style='text-align: center;min-width:170px;' type="submit " class="btn btn-primary mb-2 " onclick="govFilter() ">Government Preset</button>
+            <button style='text-align: center; min-width:170px;' type="submit" class="btn btn-primary mb-2" onclick="devFilter()">Developer Preset</button><br>
+            <br><button style='text-align: center;min-width:170px;' type="submit" class="btn btn-primary mb-2" onclick="commFilter()">Community Preset</button><br>
+            <br><button style='text-align: center;min-width:170px;' type="submit" class="btn btn-primary mb-2" onclick="govFilter()">Government Preset</button>
           </div>
         </div>
-        <div class="tab-pane fade " id="featureSelection " role="tabpanel ">
-          <h5 id='slider_header' data-toggle="tooltip " data-placement="top "
-          title="(10 is most important and positive, -10 is most important and negative, and 0 removes the feature from the AHOI) ">
+        <div class="tab-pane fade" id="featureSelection" role="tabpanel">
+          <h5 id='slider_header' data-toggle="tooltip" data-placement="top"
+          title="(10 is most important and positive, -10 is most important and negative, and 0 removes the feature from the AHOI)">
           <br>Use the sliders to customize feature importance (hover for more info)
         </h5>
           <h6 style='text-align: center; font-weight: bold'><br>Neighborhood Building Stock<br></h6>
-          <div id="featureSelector ">
-            <div class="sliders " style='display:inline-block'>
+          <div id="featureSelector">
+            <div class="sliders" style='display:inline-block'>
               <div class = 'row'>
-                <div class="col-xs-6 col-md-9 ">
-                  <label for="newHousing ">% of Housing Built After 2010 <span id="newHousingVal "></span></label>
+                <div class="col-xs-6 col-md-9">
+                  <label for="newHousing">% of Housing Built After 2010 <span id="newHousingVal"></span></label>
                 </div>
-                <div class="col-xs-6 col-md-3 ">
-                  <input id="newHousing " type="number " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 name="newHousing " value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from
-    -10 to 10 ">
+                <div class="col-xs-6 col-md-3">
+                  <input id="newHousing" type="number" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 name="newHousing" value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                 </div>
               </div>
                 <div class = 'row'>
-                  <div class="col-xs-6 col-md-9 ">
-                    <label for="oldHousing ">% of Housing Built Before 1940 <span id="oldHousingVal "></span></label>
+                  <div class="col-xs-6 col-md-9">
+                    <label for="oldHousing">% of Housing Built Before 1940 <span id="oldHousingVal"></span></label>
                   </div>
-                  <div class="col-xs-6 col-md-3 ">
-                    <input id="oldHousing " type='number' class="form-control bfh-number " name="oldHousing " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from
-    -10 to 10 ">
+                  <div class="col-xs-6 col-md-3">
+                    <input id="oldHousing" type='number' class="form-control bfh-number" name="oldHousing" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                   </div>
                 </div>
                 <div class = 'row'>
-                  <div class="col-xs-6 col-md-9 ">
-                    <label for="recentMove ">% of Households that Moved in After 2010<span id="recentMoveVal "></span></label>
+                  <div class="col-xs-6 col-md-9">
+                    <label for="recentMove">% of Households that Moved in After 2010<span id="recentMoveVal"></span></label>
                   </div>
-                  <div class="col-xs-6 col-md-3 ">
-                    <input id="recentMove " type='number' name="recentMove " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from
-    -10 to 10 ">
-                  </div>
-                </div>
-
-                <div class = 'row'>
-                  <div class="col-xs-6 col-md-9 ">
-                    <label for="owners ">% of Owner-Occupied Units <span id="ownersVal "></span></label>
-                  </div>
-                  <div class="col-xs-6 col-md-3 ">
-                    <input id="owners " type='number' name="owners " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from -10 to
-    10 ">
+                  <div class="col-xs-6 col-md-3">
+                    <input id="recentMove" type='number' name="recentMove" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                   </div>
                 </div>
-
                 <div class = 'row'>
-                  <div class="col-xs-6 col-md-9 ">
-                    <label for="renters ">% of Renter-Occupied Units<span id="rentersVal "></span></label>
+                  <div class="col-xs-6 col-md-9">
+                    <label for="owners">% of Owner-Occupied Units <span id="ownersVal"></span></label>
                   </div>
-                  <div class="col-xs-6 col-md-3 ">
-                    <input id="renters " type='number' name="renters " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from -10 to
-    10 ">
+                  <div class="col-xs-6 col-md-3">
+                    <input id="owners" type='number' name="owners" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                   </div>
                 </div>
-
                 <div class = 'row'>
-                  <div class="col-xs-6 col-md-9 ">
-                    <label for="highRent ">% of Households with Rent Greater than $2000/month<span id="highRentVal "></span></label>
+                  <div class="col-xs-6 col-md-9">
+                    <label for="renters">% of Renter-Occupied Units<span id="rentersVal"></span></label>
                   </div>
-                  <div class="col-xs-6 col-md-3 ">
-                    <input id="highRent " type='number' name="highRent " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from -10
-    to 10 ">
+                  <div class="col-xs-6 col-md-3">
+                    <input id="renters" type='number' name="renters" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
+                  </div>
+                </div>
+                <div class = 'row'>
+                  <div class="col-xs-6 col-md-9">
+                    <label for="highRent">% of Households with Rent Greater than $2000/month<span id="highRentVal"></span></label>
+                  </div>
+                  <div class="col-xs-6 col-md-3">
+                    <input id="highRent" type='number' name="highRent" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                   </div>
                 </div>
               </div>
             </div>
             <h6 style='text-align: center; font-weight: bold;'>Community Characteristics</h6>
-            <div id="featureSelector ">
-              <span id="newFeature "></span>
-              <div class="sliders " style='display:inline-block'>
+            <div id="featureSelector">
+              <span id="newFeature"></span>
+              <div class="sliders" style='display:inline-block'>
                   <div class = 'row'>
-                    <div class="col-xs-6 col-md-9 ">
-                      <label for="collegePlus ">% of People with College, Master's, or Doctorate Degree <span id="collegePlusVal "></span></label>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="collegePlus">% of People with College, Master's, or Doctorate Degree <span id="collegePlusVal"></span></label>
                     </div>
-                    <div class="col-xs-6 col-md-3 ">
-                      <input id="collegePlus " type='number' name="collegePlus " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number
-    from -10 to 10 ">
+                    <div class="col-xs-6 col-md-3">
+                      <input id="collegePlus" type='number' name="collegePlus" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                     </div>
                   </div>
-
                   <div class = 'row'>
-                    <div class="col-xs-6 col-md-9 ">
-                      <label for="hsMinus ">% of People with less than a High School Degree <span id="hsMinusVal "></span></label>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="hsMinus">% of People with less than a High School Degree <span id="hsMinusVal"></span></label>
                     </div>
-                    <div class="col-xs-6 col-md-3 ">
-                      <input id="hsMinus " type='number' name="hsMinus " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from -10
-    to 10 ">
+                    <div class="col-xs-6 col-md-3">
+                      <input id="hsMinus" type='number' name="hsMinus" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                     </div>
                   </div>
-
                   <div class = 'row'>
-                    <div class="col-xs-6 col-md-9 ">
-                      <label for="highIncome ">% of Households with Incomes Higher than $100,000 <span id="highIncomeVal "></span></label>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="highIncome">% of Households with Incomes Higher than $100,000 <span id="highIncomeVal"></span></label>
                     </div>
-                    <div class="col-xs-6 col-md-3 ">
-                      <input id="highIncome " type='number' name="highIncome " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from
-    -10 to 10 ">
+                    <div class="col-xs-6 col-md-3">
+                      <input id="highIncome" type='number' name="highIncome" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                     </div>
                   </div>
-
                   <div class = 'row'>
-                    <div class="col-xs-6 col-md-9 ">
-                      <label for="children ">% of People Under 18<span id="childrenVal "></span></label>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="children">% of People Under 18<span id="childrenVal"></span></label>
                     </div>
-                    <div class="col-xs-6 col-md-3 ">
-                      <input id="children " type='number' name="children " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from -10
-    to 10 ">
+                    <div class="col-xs-6 col-md-3">
+                      <input id="children" type='number' name="children" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                     </div>
                   </div>
-
                   <div class = 'row'>
-                    <div class="col-xs-6 col-md-9 ">
-                      <label for="elderly ">% of People Older than 65 <span id="elderlyVal "></span></label>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="elderly">% of People Older than 65 <span id="elderlyVal"></span></label>
                     </div>
-                    <div class="col-xs-6 col-md-3 ">
-                      <input id="elderly " type='number' name="elderly " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from -10
-    to 10 ">
+                    <div class="col-xs-6 col-md-3">
+                      <input id="elderly" type='number' name="elderly" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                     </div>
                   </div>
-
                   <div class = 'row'>
-                    <div class="col-xs-6 col-md-9 ">
-                      <label for="poverty ">% of People in Poverty <span id="povertyVal "></span></label>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="poverty">% of People in Poverty <span id="povertyVal"></span></label>
                     </div>
-                    <div class="col-xs-6 col-md-3 ">
-                      <input id="poverty " type='number' name="poverty " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from -10
-    to 10 ">
+                    <div class="col-xs-6 col-md-3">
+                      <input id="poverty" type='number' name="poverty" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                     </div>
                   </div>
-
                   <div class = 'row'>
-                    <div class="col-xs-6 col-md-9 ">
-                      <label for="white ">% of Population that is White<span id="whiteVal "></span></label>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="white">% of Population that is White<span id="whiteVal"></span></label>
                     </div>
-                    <div class="col-xs-6 col-md-3 ">
-                      <input id="white " type='number' name="white " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from -10 to
-    10 ">
+                    <div class="col-xs-6 col-md-3">
+                      <input id="white" type='number' name="white" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                     </div>
                   </div>
-
                   <div class = 'row'>
-                    <div class="col-xs-6 col-md-9 ">
-                      <label for="unemployed ">% of People Unemployed<span id="unemployedVal "></span></label>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="unemployed">% of People Unemployed<span id="unemployedVal"></span></label>
                     </div>
-                    <div class="col-xs-6 col-md-3 ">
-                      <input id="unemployed " type='number' name="unemployed " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from
-    -10 to 10 ">
+                    <div class="col-xs-6 col-md-3">
+                      <input id="unemployed" type='number' name="unemployed" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                     </div>
                   </div>
-
                   <div class = 'row'>
-                    <div class="col-xs-6 col-md-9 ">
-                      <label for="shortTrip ">% of Workers with a Travel Time Less than 30 Minutes<span id="shortTripVal "></span></label>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="shortTrip">% of Workers with a Travel Time Less than 30 Minutes<span id="shortTripVal"></span></label>
                     </div>
-                    <div class="col-xs-6 col-md-3 ">
-                      <input id="shortTrip " type='number' name="shortTrip " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from
-    -10 to 10 ">
+                    <div class="col-xs-6 col-md-3">
+                      <input id="shortTrip" type='number' name="shortTrip" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                     </div>
                   </div>
-
                   <div class = 'row'>
-                    <div class="col-xs-6 col-md-9 ">
-                      <label for="vacancy ">% of Units Vacant<span id="vacanyVal "></span></label>
+                    <div class="col-xs-6 col-md-9">
+                      <label for="vacancy">% of Units Vacant<span id="vacanyVal"></span></label>
                     </div>
-                    <div class="col-xs-6 col-md-3 ">
-                      <input id="vacancy " type='number' name="vacancy " class="form-control bfh-number " data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip " data-placement="top " title="Input number from -10
-    to 10 ">
+                    <div class="col-xs-6 col-md-3">
+                      <input id="vacancy" type='number' name="vacancy" class="form-control bfh-number" data-min=-10 data-max=10 min=-10 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from -10 to 10">
                     </div>
                   </div>
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade " id="filters " role="tabpanel ">
-          <form class="form " style='margin-left: 10px; margin-right: 10px'>
+        <div class="tab-pane fade" id="filters" role="tabpanel">
+          <form class="form" style='margin-left: 10px; margin-right: 10px'>
             <div class='row'>
-            <div class="col-xs-6 col-md-6 ">
-            <label for="farMin " data-toggle="tooltip " data-placement="top " title="FAR is a measurement of density. It is the ratio of gross floor area to area of the property is built in. Higher FARs allow for denser development. "><br>Choose Minimum Floor Area Ratio (FAR):</label>
+            <div class="col-xs-6 col-md-6">
+            <label for="farMin" data-toggle="tooltip" data-placement="top" title="FAR is a measurement of density. It is the ratio of gross floor area to area of the property is built in. Higher FARs allow for denser development."><br>Choose Minimum Floor Area Ratio (FAR):</label>
           </div>
-          <div class="col-xs-6 col-md-6 ">
+          <div class="col-xs-6 col-md-6">
             <br>
-            <select class="form-control " id="farMin1 ">
+            <select class="form-control" id="farMin1">
               <option selected='selected' value='0'>0 (No Minimum)</option>
               <option value='1'>1</option>
               <option value='2'>2</option>
@@ -263,12 +236,12 @@
           </div>
         </div>
         <div class='row'>
-            <div class="col-xs-6 col-md-6 ">
-            <label for="numProp "><br>Show Just the Top Scoring Properties</label>
+            <div class="col-xs-6 col-md-6">
+            <label for="numProp"><br>Show Just the Top Scoring Properties</label>
             </div>
-          <div class="col-xs-6 col-md-6 ">
+          <div class="col-xs-6 col-md-6">
             <br>
-            <select class="form-control " id="numProp1 ">
+            <select class="form-control" id="numProp1">
               <option value='all'>Show all parcels</option>
               <option value='100'>Show Top 100</option>
               <option value'50'>Show Top 50</option>
@@ -278,40 +251,38 @@
         </div>
             <br>
             <div style='display: block; margin: auto; width: 50% !important'>
-            <button style='display: inline; text-align: center' type="button " class="btn btn-primary mb-2 " onclick="updateMap() ">Apply Filters </button>
-            <button style='display: inline; text-align: center' type="button " class="btn btn-primary mb-2 " onclick='resetFilters()'>Reset Filters</button>
+            <button style='display: inline; text-align: center' type="button" class="btn btn-primary mb-2" onclick="updateMap()">Apply Filters </button>
+            <button style='display: inline; text-align: center' type="button" class="btn btn-primary mb-2" onclick='resetFilters()'>Reset Filters</button>
           </div>
           </form>
         </div>
       </div>
     </div>
-    <div class="col-xs-4 col-md-8 ">
+    <div class="col-xs-4 col-md-8">
       <div id='my-map'></div>
     </div>
   </div>
-
 <!-- SECOND ROW: LIST OF TOP 25 PROPERTIES -->
-  <div class="row " style='background-color: #fafaf8'>
-    <div class="col-xs-4 col-md-12 ">
-      <h3 style="text-align: center; margin-top: 10px; "> <br> Top 25 Properties</h3>
+  <div class="row" style='background-color: #fafaf8'>
+    <div class="col-xs-4 col-md-12">
+      <h3 style="text-align: center; margin-top: 10px;"> <br> Top 25 Properties</h3>
       <div id='property_list' style='text-align:center;'>
       </div>
     </div>
   </div>
 </div>
 
-
 <!-- MODALS -->
-<div class="modal fade " id="dataModal " tabindex="-1 " role="dialog " aria-labelledby="exampleModalLongTitle " aria-hidden="true ">
-  <div class="modal-dialog " role="document ">
-    <div class="modal-content ">
-      <div class="modal-header ">
-        <h5 class="modal-title " id="exampleModalLongTitle ">Datasets</h5>
-        <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
-          <span aria-hidden="true ">&times;</span>
+<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Datasets</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body ">
+      <div class="modal-body">
         <div class='datasets'>
           <h4 id='box_top'>
             <a id='box_top_1' class='data_list' href='https://github.com/jack-lundquist/devoppidx/blob/master/js/data_norm.geojson'> <div class='subhead'>Processed Data <br> <br></div></a>
@@ -322,25 +293,25 @@
         </h4>
           <a class='data_list' href='https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page'>
               PLUTO Data</a>
-          <a class='data_list' href="https://www.census.gov/developers/ ">Census API</a>
+          <a class='data_list' href="https://www.census.gov/developers/">Census API</a>
         </div>
       </div>
-      <div class="modal-footer ">
-        <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
-<div class="modal show " id="useModal " tabindex="-1 " role="dialog " aria-labelledby="exampleModalLongTitle " aria-hidden="true ">
-  <div style='min-width: 75%' class="modal-dialog " role="document ">
-    <div class="modal-content ">
-      <div class="modal-header ">
-        <h4 style="text-align: center " class="modal-title " id="exampleModalLongTitle ">Welcome to the Affordable Housing Opportunity Index Dashboard!</h4>
-        <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
-          <span aria-hidden="true ">&times;</span>
+<div class="modal show" id="useModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div style='min-width: 75%' class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 style="text-align: center" class="modal-title" id="exampleModalLongTitle">Welcome to the Affordable Housing Opportunity Index Dashboard!</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body ">
+      <div class="modal-body">
         <div>
           <h4 id='box_top' style='text-align: center; font-weight:bold'>
             Selecting Features
@@ -355,7 +326,6 @@
              Some may matter very little to you, and some may matter a lot. The presence
               of some of these features may be desirable to you, and some may not be. Use the preset options to choose
               a weighting relevant to the stakeholder group you identify with.<br><br>
-
             Beyond the presets, this tool and the AHOI have been designed to allow any stakeholder to determine the
              weighting most appropriate for them! Changing the weighting is simple.
              Features that are desirable should be weighted positively - the larger the
@@ -381,46 +351,42 @@
           </p>
         </div>
       </div>
-      <div class="modal-footer ">
-        <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
-
-<div class="modal fade " id="creditsModal " tabindex="-1 " role="dialog " aria-labelledby="exampleModalLongTitle " aria-hidden="true ">
-  <div class="modal-dialog " role="document ">
-    <div class="modal-content ">
-      <div class="modal-header ">
-        <h5 class="modal-title " id="exampleModalLongTitle ">About this project</h5>
-        <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
-          <span aria-hidden="true ">&times;</span>
+<div class="modal fade" id="creditsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">About this project</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body ">
+      <div class="modal-body">
         This mapping project builds off a project Julián Ferreiro,
         Jack Lundquist and Rebecca Scheidegger completed for the course
-        "Civic Analytics & Urban Intelligence. " This dashboard was created by Jack Lundquist
-        for the course "Advanced GIS: Interactive Web Mapping and Spatial Data Visualization. "
-        For more information, email <a href="mailto:jack.lundquist@nyu.edu ">jack.lundquist@nyu.edu</a>.
+        "Civic Analytics & Urban Intelligence." This dashboard was created by Jack Lundquist
+        for the course "Advanced GIS: Interactive Web Mapping and Spatial Data Visualization."
+        For more information, email <a href="mailto:jack.lundquist@nyu.edu">jack.lundquist@nyu.edu</a>.
       </div>
-      <div class="modal-footer ">
-        <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
-
-
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
-<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js "
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
   integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
-  crossorigin=" "></script>
-<script src="js/data_norm.js "></script>
-<script src="js/scripts_index.js "></script>
+  crossorigin=""></script>
+<script src="js/data_norm.js"></script>
+<script src="js/scripts_index.js"></script>
 <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.js'></script> -->
 </body>
 </html>
