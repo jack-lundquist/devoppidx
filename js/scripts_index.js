@@ -112,7 +112,7 @@ function makeUL(array) {
 
     for(var i = 0; i < array.length; i++) {
         // Create the list item:
-        property = array[1].properties;
+        property = array[i].properties;
         address = property.Address;
         index = property.idx;
         far = property.ResidFAR;
