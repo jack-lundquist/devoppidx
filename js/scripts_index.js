@@ -115,7 +115,7 @@ function makeUL(array) {
         // Create the list item and get the relevant features:
         property = array[i].properties;
         address = property.Address;
-        index = property.idx;
+        index = parseInt(property.idx);
         far = property.ResidFAR;
         value = property.AssessTot;
         var item = document.createElement('li');
