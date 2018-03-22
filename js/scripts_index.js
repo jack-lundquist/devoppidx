@@ -109,6 +109,7 @@ function getTopN(arr, prop, n) {
 function makeUL(array) {
     // Create the list element:
     var list = document.createElement('ol');
+    list.style.cssText = 'display:inline-block; text-align: left'
 
     for(var i = 0; i < array.length; i++) {
         // Create the list item:
@@ -118,6 +119,7 @@ function makeUL(array) {
         far = property.ResidFAR;
         value = property.AssessTot;
         var item = document.createElement('li');
+
         // Set its contents:
         item.appendChild(document.createTextNode("Address: " + address +
         "; Index Score: " + index + "; FAR: " + far + "; Assessed Value: $" +value));
@@ -165,7 +167,6 @@ function updateMap() {
 
   filteredLayer.addTo(map);
   features = getTopN(features, 'idx', 25);
-  console.log(features[0].properties.Address);
   // make a list from the array of features
   $("#property_list").html('');
   document.getElementById('property_list').appendChild(makeUL(features));
