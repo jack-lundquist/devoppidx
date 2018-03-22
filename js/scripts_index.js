@@ -104,26 +104,30 @@ function getTopN(arr, prop, n) {
     });
     return clone.slice(0, n);
 };
-//
-//
-// function makeUL(array) {
-//     // Create the list element:
-//     var list = document.createElement('ul');
-//
-//     for(var i = 0; i < array.length; i++) {
-//         // Create the list item:
-//         var item = document.createElement('li');
-//
-//         // Set its contents:
-//         item.appendChild(document.createTextNode(array[i]));
-//
-//         // Add it to the list:
-//         list.appendChild(item);
-//     }
-//
-//     // Finally, return the constructed list:
-//     return list;
-// }
+
+
+function makeUL(array) {
+    // Create the list element:
+    var list = document.createElement('ol');
+
+    for(var i = 0; i < array.length; i++) {
+        // Create the list item:
+        property = array[1].properties;
+        address = property.Address;
+        index = property.idx;
+        far = property.ResidFAR;
+        value = property.AssessTot;
+        var item = document.createElement('li');
+        // Set its contents:
+        item.appendChild(document.createTextNode("Address: " + address +
+        "; Index Score: " + index + "; FAR: " + far + "; Assessed Value: $" +value));
+        // Add it to the list:
+        list.appendChild(item);
+    }
+
+    // Finally, return the constructed list:
+    return list;
+}
 var filteredLayer = L.geoJSON(data_norm, {
   onEachFeature: onEachFeature,
 });
@@ -143,7 +147,7 @@ function updateMap() {
 
   // filter the features for those greater than selectedFAR
   var features = data_norm.features
-    .filter(d => d.properties.ResidFAR > selectedFAR);
+    .filter(d => d.properties.ResidFAR >= selectedFAR);
 
   // if anything other than 'all' is selected, getTopN()
   features = (selectedN === 'all') ? features : getTopN(features, 'idx', selectedN);
@@ -158,12 +162,13 @@ function updateMap() {
   filteredLayer = L.geoJSON(FC, {
     onEachFeature: onEachFeature,
   });
-  console.log(filteredLayer);
 
   filteredLayer.addTo(map);
-
+  features = getTopN(features, 'idx', 25);
+  console.log(features[0].properties.Address);
   // make a list from the array of features
-  // document.getElementById('property_list').appendChild(makeUL(features));
+  $("#property_list").html('');
+  document.getElementById('property_list').appendChild(makeUL(features));
 };
 
 updateMap();
