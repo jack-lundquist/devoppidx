@@ -1,4 +1,4 @@
-//Load intro modal on load
+//Popup intro modal on load
 $('#useModal').modal('show');
 
 
@@ -35,11 +35,13 @@ function getColor(d) {
 //Initializaing function for each feature in the geojson
 function onEachFeature(feature, layer) {
     scores = [];
+    //Get buttons
     var selections = [$("#vacancy"), $("#shortTrip"), $("#highRent"), $("#renters"),
         $("#owners"), $("#recentMove"), $("#unemployed"), $("#white"),
         $("#poverty"), $("#elderly"), $("#children"), $("#highIncome"),
         $("#hsMinus"), $("#collegePlus"), $("#oldHousing"), $("#newHousing")
     ];
+    //Check if button values are in the right range and change if not
     for (var i = 0; i < selections.length; i++) {
       selections[i].val(parseInt(selections[i].val()));
         if (selections[i].val() > 10) {
@@ -51,17 +53,14 @@ function onEachFeature(feature, layer) {
             selections[i].val(-10);
         };
     };
+    //array of weightings
     var idx = [$("#vacancy").val(), $("#shortTrip").val(), $("#highRent").val(), $("#renters").val(),
         $("#owners").val(), $("#recentMove").val(), $("#unemployed").val(), $("#white").val(),
         $("#poverty").val(), $("#elderly").val(), $("#children").val(), $("#highIncome").val(),
         $("#hsMinus").val(), $("#collegePlus").val(), $("#oldHousing").val(), $("#newHousing").val()
     ];
 
-
-    // does this feature have a property named popupContent?
-    if (feature.properties && feature.properties.Address) {
-        layer.bindPopup("Address: " + feature.properties.Address + "\n" + "BBL: " + feature.properties.BBL);
-    }
+    //calculate index score
     feature.properties.idx = 0;
     features = [layer.feature.properties.pct_vacantunits_norm, layer.feature.properties.pct_traveltime_under30mins_norm,
         layer.feature.properties.pct_rent_2000plus_norm, layer.feature.properties.pct_renters_norm,
@@ -77,6 +76,7 @@ function onEachFeature(feature, layer) {
         score += idx[i] * features[i];
     };
     layer.feature.properties.idx = score;
+    //get color, make popup and style layer
     layer.feature.properties.color = getColor(score);
     if (layer.feature.properties && layer.feature.properties.Address) {
         layer.bindPopup("Address: " + layer.feature.properties.Address + "\n" + "BBL: " + layer.feature.properties.BBL +
@@ -105,14 +105,14 @@ function getTopN(arr, prop, n) {
     return clone.slice(0, n);
 };
 
-
+//function to populate the list
 function makeUL(array) {
     // Create the list element:
     var list = document.createElement('ol');
     list.style.cssText = 'display:inline-block; text-align: left'
 
     for(var i = 0; i < array.length; i++) {
-        // Create the list item:
+        // Create the list item and get the relevant features:
         property = array[i].properties;
         address = property.Address;
         index = property.idx;
@@ -130,6 +130,8 @@ function makeUL(array) {
     // Finally, return the constructed list:
     return list;
 }
+
+//initialize layer for the first time around (need something to clear)
 var filteredLayer = L.geoJSON(data_norm, {
   onEachFeature: onEachFeature,
 });
@@ -172,6 +174,7 @@ function updateMap() {
   document.getElementById('property_list').appendChild(makeUL(features));
 };
 
+//first map populated!
 updateMap();
 
 
@@ -200,13 +203,15 @@ legend.onAdd = function(map) {
 
 legend.addTo(map);
 
-//When reset filter button is pushed - clears all filters + resets filter buttons
+//When reset filter button is pushed - clears all filters + resets filter buttons and updates map
 function resetFilters() {
   $("#numProp1").val("all");
   $("#farMin1").val('0');
   updateMap();
 };
 
+
+//fill weightings with stakeholder presets and updates map
 function devFilter() {
   $("#vacancy").val(-5);
   $("#shortTrip").val(2);
