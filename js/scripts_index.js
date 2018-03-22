@@ -13,43 +13,51 @@ var map = L.map('my-map', {
 }).setView([40.692874, -73.939018], 12);
 
 //Add the basemap
-L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-    subdomains: 'abcd',
-    maxZoom: 19
+L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+	subdomains: 'abcd',
+	maxZoom: 19
 }).addTo(map);
 
 //Choropleth Function
 function getColor(d) {
-    return d > 15 ? '#4FDE02' :
-        d > 10 ? '#83E002' :
-        d > 5 ? '#B8E202' :
-        d > 0 ? '#E4D902' :
-        d > -5 ? '#E6A603' :
-        d > -10 ? '#E87203' :
-        d > -15 ? '#EA3E03' :
-        '#EC0803';
+    return d > 15 ? '#EFF821' :
+        d > 10 ? '#FDBB2B' :
+        d > 5 ? '#F38748' :
+        d > 0 ? '#DA5A68' :
+        d > -5 ? '#CA4678' :
+        d > -10 ? '#8908A5' :
+        d > -15 ? '#5201A3' :
+        '#0C0786';
 };
 
 
 //Initializaing function for each feature in the geojson
 function onEachFeature(feature, layer) {
     scores = [];
+    var selections = [$("#vacancy"), $("#shortTrip"), $("#highRent"), $("#renters"),
+        $("#owners"), $("#recentMove"), $("#unemployed"), $("#white"),
+        $("#poverty"), $("#elderly"), $("#children"), $("#highIncome"),
+        $("#hsMinus"), $("#collegePlus"), $("#oldHousing"), $("#newHousing")
+    ];
+    for (var i = 0; i < selections.length; i++) {
+      selections[i].val(parseInt(selections[i].val()));
+        if (selections[i].val() > 10) {
+            alert('Please choose values <= 10! Value changed to 10 in index calculation.');
+            selections[i].val(10);
+        };
+        if (selections[i].val() < -10) {
+            alert('Please choose values => -10! Value changed to -10 in index calculation.');
+            selections[i].val(-10);
+        };
+    };
     var idx = [$("#vacancy").val(), $("#shortTrip").val(), $("#highRent").val(), $("#renters").val(),
         $("#owners").val(), $("#recentMove").val(), $("#unemployed").val(), $("#white").val(),
         $("#poverty").val(), $("#elderly").val(), $("#children").val(), $("#highIncome").val(),
         $("#hsMinus").val(), $("#collegePlus").val(), $("#oldHousing").val(), $("#newHousing").val()
     ];
-    for (var i = 0; i < idx.length; i++) {
-        if (idx[i] > 10) {
-            alert('Please choose values <= 10! Value changed to 10 in index calculation.');
-            idx[i] == 10;
-        };
-        if (idx[i] < -10) {
-            alert('Please choose values => -10! Value changed to -10 in index calculation.');
-            idx[i] == -10;
-        }
-    };
+
+
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.Address) {
         layer.bindPopup("Address: " + feature.properties.Address + "\n" + "BBL: " + feature.properties.BBL);
@@ -116,34 +124,46 @@ function getTopN(arr, prop, n) {
 //     // Finally, return the constructed list:
 //     return list;
 // }
-
+var filteredLayer = L.geoJSON(data_norm, {
+  onEachFeature: onEachFeature,
+});
 //Update Map Function - called whenever values change or the apply filter button is pushed
 function updateMap() {
-  var val = $('#numProp1').find(":selected").text();
-  var prop_layer = L.geoJSON(data_norm, {
-      onEachFeature: onEachFeature,
-  });
-  var features = data_norm.features;
-  var prop_layer = features.filter(a=>a.ResidFAR>(parseInt($('#farMin1').find(":selected").text().charAt(0))));
-  console.log(prop_layer);
-  var prop_layer_100 = getTopN(features, 'idx', 100);
-  var prop_layer_50 = getTopN(features, 'idx', 50);
-  var prop_layer_25 = getTopN(features, 'idx', 25);
-  if(val == "Show Top 100") {
-    prop_layer_100.addTo(map);
-  }
-  else if (val == "Show Top 50") {
-    prop_layer_50.addTo(map);
-  }
-  else if (val == "Show Top 25") {
-    prop_layer_25.addTo(map);
-  }
-  else {prop_layer.addTo(map);
+  // start by reading the current state of the dropdowns
+  var selectedN = $('#numProp1')
+    .find(":selected")
+    .val();
+
+  var selectedFAR = parseInt(
+    $('#farMin1')
+      .find(":selected")
+      .text()
+      .charAt(0)
+  );
+
+  // filter the features for those greater than selectedFAR
+  var features = data_norm.features
+    .filter(d => d.properties.ResidFAR > selectedFAR);
+
+  // if anything other than 'all' is selected, getTopN()
+  features = (selectedN === 'all') ? features : getTopN(features, 'idx', selectedN);
+
+  // build a valid GeoJSON FeatureCollection around the now-filtered array of features.
+  var FC = {
+    type: 'FeatureCollection',
+    features: features,
   };
-  console.log(prop_layer_100);
-  console.log(parseInt($('#farMin1').find(":selected").text().charAt(0)));
-  console.log(val);
-  document.getElementById('property_list').appendChild(makeUL(JSONparse(prop_layer_25).features));
+  filteredLayer.clearLayers();
+  // create a Leaflet geojson layer from the FeatureCollection
+  filteredLayer = L.geoJSON(FC, {
+    onEachFeature: onEachFeature,
+  });
+  console.log(filteredLayer);
+
+  filteredLayer.addTo(map);
+
+  // make a list from the array of features
+  // document.getElementById('property_list').appendChild(makeUL(features));
 };
 
 updateMap();
@@ -178,64 +198,65 @@ legend.addTo(map);
 function resetFilters() {
   $("#numProp1").val("all");
   $("#farMin1").val('0');
+  updateMap();
 };
 
 function devFilter() {
-  $("#vacancy").val() = -5;
-  $("#shortTrip").val() = 2;
-  $("#highRent").val() = 5;
-  $("#renters").val() = 0;
-  $("#owners").val() = 5;
-  $("#recentMove").val() = 7;
-  $("#unemployed").val() = -7;
-  $("#white").val() = 5;
-  $("#poverty").val() = -7;
-  $("#elderly").val() = 0;
-  $("#children").val() = 0;
-  $("#highIncome").val() = 7;
-  $("#hsMinus").val() = -5;
-  $("#collegePlus").val() = 7;
-  $("#oldHousing").val() = 0;
-  $("#newHousing").val() = 7;
+  $("#vacancy").val(-5);
+  $("#shortTrip").val(2);
+  $("#highRent").val(5);
+  $("#renters").val(0);
+  $("#owners").val(5);
+  $("#recentMove").val(7);
+  $("#unemployed").val(-7);
+  $("#white").val(5);
+  $("#poverty").val(-7);
+  $("#elderly").val(0);
+  $("#children").val(0);
+  $("#highIncome").val(7);
+  $("#hsMinus").val(-5);
+  $("#collegePlus").val(7);
+  $("#oldHousing").val(0);
+  $("#newHousing").val(7);
   updateMap();
 };
 
 function commFilter() {
-  $("#vacancy").val() = 5;
-  $("#shortTrip").val() = 7;
-  $("#highRent").val() = -5;
-  $("#renters").val() = 0;
-  $("#owners").val() = 0;
-  $("#recentMove").val() = 0;
-  $("#unemployed").val() = 5;
-  $("#white").val() = -5;
-  $("#poverty").val() = 5;
-  $("#elderly").val() = 5;
-  $("#children").val() = 5;
-  $("#highIncome").val() = 3;
-  $("#hsMinus").val() = 5;
-  $("#collegePlus").val() = 3;
-  $("#oldHousing").val() = 3;
-  $("#newHousing").val() = 3;
+  $("#vacancy").val(5);
+  $("#shortTrip").val(7);
+  $("#highRent").val(-5);
+  $("#renters").val(0);
+  $("#owners").val(0);
+  $("#recentMove").val(0);
+  $("#unemployed").val(5);
+  $("#white").val(-5);
+  $("#poverty").val(5);
+  $("#elderly").val(5);
+  $("#children").val(5);
+  $("#highIncome").val(3);
+  $("#hsMinus").val(5);
+  $("#collegePlus").val(3);
+  $("#oldHousing").val(3);
+  $("#newHousing").val(3);
   updateMap();
 };
 
 function govFilter() {
-  $("#vacancy").val() = 7;
-  $("#shortTrip").val() = 3;
-  $("#highRent").val() = 0;
-  $("#renters").val() = 5;
-  $("#owners").val() = 0;
-  $("#recentMove").val() = 0;
-  $("#unemployed").val() = 7;
-  $("#white").val() = 0;
-  $("#poverty").val() = 5;
-  $("#elderly").val() = 5;
-  $("#children").val() = 5;
-  $("#highIncome").val() = 0;
-  $("#hsMinus").val() = 5;
-  $("#collegePlus").val() = 0;
-  $("#oldHousing").val() = 0;
-  $("#newHousing").val() = 0;
+  $("#vacancy").val(7);
+  $("#shortTrip").val(3);
+  $("#highRent").val(0);
+  $("#renters").val(5);
+  $("#owners").val(0);
+  $("#recentMove").val(0);
+  $("#unemployed").val(7);
+  $("#white").val(0);
+  $("#poverty").val(5);
+  $("#elderly").val(5);
+  $("#children").val(5);
+  $("#highIncome").val(0);
+  $("#hsMinus").val(5);
+  $("#collegePlus").val(0);
+  $("#oldHousing").val(0);
+  $("#newHousing").val(0);
   updateMap();
 };

@@ -44,26 +44,28 @@
 <!-- BODY -->
 <div id="body">
 <!-- FIRST ROW: ~1/3 Feature Selection, 2/3 Map -->
-  <div class="row">
+  <div class="row" style='background: "#fafafa"'>
     <div class="col-md-4">
       <ul id='tabs' class="nav nav-tabs nav-justified">
-        <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#presets" role="tab">Choose from Preset Weightings!</a>
+        <li style='vertical-align: middle; min-height: 70px' class="nav-item">
+            <a style='vertical-align: middle; min-height: 70px' class="nav-link active" data-toggle="tab" href="#presets" role="tab">Choose from Preset Weightings</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#featureSelection" role="tab">Custom Feature Selection</a>
+        <li style='vertical-align: middle; min-height: 70px' class="nav-item">
+            <a style='vertical-align: middle; min-height: 70px' class="nav-link" data-toggle="tab" href="#featureSelection" role="tab">Custom Feature Selection</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#filters" role="tab"><br>Apply <br>Filters</a>
+        <li style='vertical-align: middle; min-height: 70px' class="nav-item">
+            <a style='vertical-align: middle; min-height: 70px' class="nav-link" data-toggle="tab" href="#filters" role="tab"><br>Apply Filters<br><br></a>
         </li>
       </ul>
       <!-- CONTENT FOR TABS -->
       <div class="tab-content">
         <div class="tab-pane fade in show active" id="presets" role="tabpanel">
           <br><br>
-          <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick="devFilter()">Developer Preset</button><br>
-          <br><button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick="commFilter()">Community Preset</button><br>
-          <br><button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick="govFilter()">Government Preset</button>
+          <div style='display: block; margin: auto; width: 50% !important'>
+            <button style='text-align: center; min-width:170px;' type="submit" class="btn btn-primary mb-2" onclick="devFilter()">Developer Preset</button><br>
+            <br><button style='text-align: center;min-width:170px;' type="submit" class="btn btn-primary mb-2" onclick="commFilter()">Community Preset</button><br>
+            <br><button style='text-align: center;min-width:170px;' type="submit" class="btn btn-primary mb-2" onclick="govFilter()">Government Preset</button>
+          </div>
         </div>
         <div class="tab-pane fade" id="featureSelection" role="tabpanel">
           <h5 id='slider_header' data-toggle="tooltip" data-placement="top"
@@ -223,7 +225,7 @@
             </div>
         </div>
         <div class="tab-pane fade" id="filters" role="tabpanel">
-          <form class="form">
+          <form class="form" style='margin-left: 10px; margin-right: 10px'>
             <div class='row'>
             <div class="col-xs-6 col-md-6">
             <label for="farMin" data-toggle="tooltip" data-placement="top" title="FAR is a measurement of density. It is the ratio of gross floor area to area of the property is built in. Higher FARs allow for denser development."><br>Choose Minimum Floor Area Ratio (FAR):</label>
@@ -260,8 +262,10 @@
           </div>
         </div>
             <br>
-            <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick="updateMap()">Apply Filters </button>
-            <button style='text-align: center' type="submit" class="btn btn-primary mb-2" onclick='resetFilters()'>Reset Filters</button>
+            <div style='display: block; margin: auto; width: 50% !important'>
+            <button style='display: inline; text-align: center' type="button" class="btn btn-primary mb-2" onclick="updateMap()">Apply Filters </button>
+            <button style='display: inline; text-align: center' type="button" class="btn btn-primary mb-2" onclick='resetFilters()'>Reset Filters</button>
+          </div>
           </form>
         </div>
       </div>
@@ -311,7 +315,7 @@
   </div>
 </div>
 <div class="modal show" id="useModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div style='min-width: 75%' class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 style="text-align: center" class="modal-title" id="exampleModalLongTitle">Welcome to the Affordable Housing Opportunity Index Dashboard!</h4>
@@ -321,7 +325,7 @@
       </div>
       <div class="modal-body">
         <div>
-          <h4 id='box_top'>
+          <h4 id='box_top' style='text-align: center; font-weight:bold'>
             Selecting Features
           </h4>
           <p>
@@ -332,9 +336,10 @@
             for each feature. Depending on the stakeholder group you are a part of,
             you may have different opinions about the significance of these features.
              Some may matter very little to you, and some may matter a lot. The presence
-              of some of these features may be desirable to you, and some may not be. <br><br>
+              of some of these features may be desirable to you, and some may not be. Use the preset options to choose
+              a weighting relevant to the stakeholder group you identify with.<br><br>
 
-            This tool and the AHOI has been designed to allow any stakeholder to determine the
+            Beyond the presets, this tool and the AHOI have been designed to allow any stakeholder to determine the
              weighting most appropriate for them! Changing the weighting is simple.
              Features that are desirable should be weighted positively - the larger the
              number (with a max of 10), the more significance attributed to it when calculating the score.
@@ -344,7 +349,7 @@
             The formula to calculate the AHOI score for each feature is simple:
             the sum of each normalized value multiplied by the respective weightings you choose!
           </p>
-          <h4>
+          <h4 style='text-align: center; font-weight:bold'>
             Filters
           </h4>
           <h5>Floor Area Ratio Minimum</h5>
