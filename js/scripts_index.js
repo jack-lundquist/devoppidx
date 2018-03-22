@@ -21,14 +21,14 @@ L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x
 
 //Choropleth Function
 function getColor(d) {
-    return d > 15 ? '#EFF821' :
-        d > 10 ? '#FDBB2B' :
-        d > 5 ? '#F38748' :
-        d > 0 ? '#DA5A68' :
-        d > -5 ? '#CA4678' :
-        d > -10 ? '#8908A5' :
-        d > -15 ? '#5201A3' :
-        '#0C0786';
+  return d > 15 ? '#4FDE02' :
+      d > 10 ? '#83E002' :
+      d > 5 ? '#B8E202' :
+      d > 0 ? '#E4D902' :
+      d > -5 ? '#E6A603' :
+      d > -10 ? '#E87203' :
+      d > -15 ? '#EA3E03' :
+      '#EC0803';
 };
 
 

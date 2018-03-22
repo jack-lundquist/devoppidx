@@ -37,6 +37,7 @@ h3{
 .legend {
     color: white;
     background-color: grey;
+    opacity: .85;
     padding:10px;
     width: 150px;
 }
