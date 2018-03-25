@@ -41,7 +41,7 @@ function onEachFeature(feature, layer) {
         $("#poverty"), $("#elderly"), $("#children"), $("#highIncome"),
         $("#hsMinus"), $("#collegePlus"), $("#oldHousing"), $("#newHousing")
     ];
-    //Check if button values are in the right range and change if not
+    // Check if button values are in the right range and change if not
     for (var i = 0; i < selections.length; i++) {
       selections[i].val(parseInt(selections[i].val()));
         if (selections[i].val() > 10) {
@@ -95,14 +95,31 @@ function onEachFeature(feature, layer) {
 
 //Function to get Top N values
 function getTopN(arr, prop, n) {
-    var clone = arr.slice(0);
-    // sort descending
-    clone.sort(function(x, y) {
-        if (x[prop] == y[prop]) return 0;
-        else if (parseInt(x[prop]) < parseInt(y[prop])) return 1;
-        else return -1;
+    scores = {}
+    for (var i = 0; i < arr.length; i++) {
+      scores[i] = parseInt(arr[i].properties.idx);
+    };
+    var items = Object.keys(scores).map(function(key) {
+      return [key, scores[key]];
     });
-    return clone.slice(0, n);
+    // Sort the array based on the second element
+    items.sort(function(first, second) {
+        return second[1] - first[1];
+    });
+    ID_idx_pair = items.slice(0,n);
+    top_IDs = [];
+    for (var i = 0; i < ID_idx_pair.length; i++) {
+      id_idx = ID_idx_pair[i];
+      id = parseInt(id_idx[0]);
+      top_IDs.push(id);
+    };
+    var result = [];
+    for(var i=0; i<top_IDs.length; i++) {
+       var index = top_IDs[i];
+       result.push(arr[index]);
+    };
+
+    return result;
 };
 
 //function to populate the list
@@ -129,7 +146,7 @@ function makeUL(array) {
 
     // Finally, return the constructed list:
     return list;
-}
+};
 
 //initialize layer for the first time around (need something to clear)
 var filteredLayer = L.geoJSON(data_norm, {
@@ -152,6 +169,8 @@ function updateMap() {
   // filter the features for those greater than selectedFAR
   var features = data_norm.features
     .filter(d => d.properties.ResidFAR >= selectedFAR);
+
+  console.log(features);
 
   // if anything other than 'all' is selected, getTopN()
   features = (selectedN === 'all') ? features : getTopN(features, 'idx', selectedN);
